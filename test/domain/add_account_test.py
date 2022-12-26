@@ -21,3 +21,11 @@ class TestAddAccount:
 
         with pytest.raises(NotImplementedError, match='Should implement method: add'):
             add_account.add(account=params)
+
+    @patch.multiple(AddAccount, __abstractmethods__=set())
+    def test_3_should_AddAccount_return_True_when_compare_objects(self):
+        add_account_1 = AddAccount()
+        add_account_2 = AddAccount()
+
+        assert add_account_1.__eq__
+        assert add_account_1 == add_account_2
