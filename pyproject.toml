@@ -18,4 +18,5 @@ build-backend = "pdm.pep517.api"
 dev = [
     "pre-commit>=2.21.0",
     "mypy>=0.991",
+    "flake8>=6.0.0",
 ]
