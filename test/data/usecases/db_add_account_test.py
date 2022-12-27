@@ -1,4 +1,6 @@
+import pytest
 from typing import Tuple
+from unittest.mock import patch
 
 from src.domain.params import AddAccountParams
 from src.data.usecases import DbAddAccount
@@ -41,3 +43,11 @@ class TestDbAddAccount:
         is_valid = sut.add(self.params)
 
         assert not is_valid
+
+    @patch('test.data.mocks.db.account.CheckAccountByEmailRepositorySpy.check_by_email')
+    def test_4_should_return_an_error_if_CheckAccountByEmailRepository_throws(self, mocker):
+        sut, _ = self.make_sut()
+        mocker.side_effect = Exception
+
+        with pytest.raises(Exception):
+            sut.add(self.params)
