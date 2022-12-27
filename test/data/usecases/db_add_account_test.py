@@ -92,3 +92,11 @@ class TestDbAddAccount:
         is_valid = sut.add(self.params)
 
         assert not is_valid
+
+    @patch('test.data.mocks.db.account.AddAccountRepositorySpy.add')
+    def test_9_should_return_an_error_if_AddAccountRepository_throws(self, mocker):
+        sut, _, _, _ = self.make_sut()
+        mocker.side_effect = Exception
+
+        with pytest.raises(Exception):
+            sut.add(self.params)
