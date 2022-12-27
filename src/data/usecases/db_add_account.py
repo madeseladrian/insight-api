@@ -2,11 +2,12 @@ from dataclasses import dataclass
 
 from ...domain.params import AddAccountParams
 from ..contracts.cryptography import Hasher
-from ..contracts.db.account import CheckAccountByEmailRepository
+from ..contracts.db.account import AddAccountRepository, CheckAccountByEmailRepository
 
 
 @dataclass
 class DbAddAccount():
+    add_account_repository: AddAccountRepository
     check_account_by_email_repository: CheckAccountByEmailRepository
     hasher: Hasher
 
@@ -15,6 +16,9 @@ class DbAddAccount():
         is_valid = False
 
         if not exists:
-            self.hasher.get_password_hash(account['password'])
-            is_valid = True
+            hashed_password = self.hasher.get_password_hash(account['password'])
+            data = account.copy()
+            data.update({'password': hashed_password})
+
+            is_valid = self.add_account_repository.add(data)
         return is_valid
