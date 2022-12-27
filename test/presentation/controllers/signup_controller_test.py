@@ -2,7 +2,10 @@ from faker import Faker
 from typing import Tuple
 
 from src.domain.params import AddAccountParams
+
 from src.presentation.controllers import SignUpController
+from src.presentation.errors import MissingParamError
+from src.presentation.helpers import bad_request
 
 from ...domain.mocks import mock_add_account_params
 from ..mocks.validation import ValidationSpy
@@ -32,3 +35,11 @@ class TestSignUpController:
         sut.handle(request=request)
 
         assert validation_spy.value == request
+
+    def test_2_should_return_400_if_Validation_returns_an_error(self):
+        sut, validation_spy = self.make_sut()
+        validation_spy.error = MissingParamError(self.faker.word())
+        http_response = sut.handle(self.params)
+
+        assert http_response['status_code'] == 400
+        assert http_response == bad_request(validation_spy.error)

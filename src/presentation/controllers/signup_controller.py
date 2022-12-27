@@ -1,6 +1,7 @@
 from dataclasses import dataclass
 
 from ..contracts import Validation
+from ..helpers import bad_request
 from ..params import SignUpControllerRequest
 
 
@@ -8,5 +9,6 @@ from ..params import SignUpControllerRequest
 class SignUpController():
     validation: Validation
 
-    def handle(self, request: SignUpControllerRequest) -> None:
-        self.validation.validate(request)
+    def handle(self, request: SignUpControllerRequest):
+        if error := self.validation.validate(request):
+            return bad_request(error)
