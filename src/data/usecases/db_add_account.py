@@ -10,3 +10,4 @@ class DbAddAccount():
 
     def add(self, account: AddAccountParams):
         self.check_account_by_email_repository.check_by_email(email=account['email'])
+        return True
