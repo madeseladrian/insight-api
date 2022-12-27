@@ -5,9 +5,10 @@ from unittest.mock import patch
 from src.domain.params import AddAccountParams
 
 from src.presentation.controllers import SignUpController
-from src.presentation.errors import MissingParamError
+from src.presentation.errors import EmailInUseError, MissingParamError
 from src.presentation.helpers import (
     bad_request,
+    forbidden,
     server_error
 )
 
@@ -68,3 +69,11 @@ class TestSignUpController:
         sut.handle(request=request)
 
         assert add_account_spy.params == request
+
+    def test_5_should_return_403_if_AddAccount_returns_false(self):
+        sut, add_account_spy, _ = self.make_sut()
+        add_account_spy.result = False
+        http_response = sut.handle(self.params)
+
+        assert http_response['status_code'] == 403
+        assert http_response == forbidden(EmailInUseError())
