@@ -8,5 +8,8 @@ def bad_request(error: Exception) -> HttpResponse:
 def forbidden(error: Exception) -> HttpResponse:
     return HttpResponse(status_code=403, body=error)
 
+def no_content() -> HttpResponse:
+    return HttpResponse(status_code=204, body=None)
+
 def server_error(error: Exception) -> HttpResponse:
     return HttpResponse(status_code=500, body=ServerError(error=error))

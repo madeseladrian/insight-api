@@ -87,3 +87,10 @@ class TestSignUpController:
 
         assert http_response['status_code'] == 500
         assert http_response == server_error(error=exception)
+
+    def test_7_should_return_204_if_valid_data_is_provided(self):
+        sut, _, _ = self.make_sut()
+        http_response = sut.handle(request=self.params)
+
+        assert http_response['status_code'] == 204
+        assert http_response['body'] is None

@@ -5,7 +5,12 @@ from ...domain.params import AddAccountParams
 
 from ..contracts import Validation
 from ..errors import EmailInUseError
-from ..helpers import bad_request, forbidden, server_error
+from ..helpers import (
+    bad_request,
+    forbidden,
+    no_content,
+    server_error
+)
 from ..params import SignUpControllerRequest
 
 
@@ -24,7 +29,7 @@ class SignUpController():
                 email=request['email'],
                 password=request['password']
             )):
-                return None
+                return no_content()
 
             else:
                 return forbidden(EmailInUseError())
