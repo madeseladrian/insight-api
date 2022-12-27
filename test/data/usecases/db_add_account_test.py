@@ -85,3 +85,10 @@ class TestDbAddAccount:
 
         assert add_account_repository_spy.params == self.params
         assert is_valid
+
+    def test_8_should_return_false_if_AddAccountRepository_returns_false(self):
+        sut, add_account_repository_spy, _, _ = self.make_sut()
+        add_account_repository_spy.result = False
+        is_valid = sut.add(self.params)
+
+        assert not is_valid
