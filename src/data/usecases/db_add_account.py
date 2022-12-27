@@ -9,5 +9,9 @@ class DbAddAccount():
     check_account_by_email_repository: CheckAccountByEmailRepository
 
     def add(self, account: AddAccountParams):
-        self.check_account_by_email_repository.check_by_email(email=account['email'])
-        return True
+        exists = self.check_account_by_email_repository.check_by_email(email=account['email'])
+        is_valid = False
+
+        if not exists:
+            is_valid = True
+        return is_valid

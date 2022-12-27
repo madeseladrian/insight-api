@@ -34,3 +34,10 @@ class TestDbAddAccount:
         is_valid = sut.add(self.params)
 
         assert is_valid
+
+    def test_3_should_return_false_if_CheckAccoutByEmailRepository_returns_true(self):
+        sut, check_account_by_email_repository_spy = self.make_sut()
+        check_account_by_email_repository_spy.result = True
+        is_valid = sut.add(self.params)
+
+        assert not is_valid
