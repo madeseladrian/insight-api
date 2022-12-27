@@ -1,7 +1,7 @@
 from dataclasses import dataclass
 
 from ..contracts import Validation
-from ..helpers import bad_request
+from ..helpers import bad_request, server_error
 from ..params import SignUpControllerRequest
 
 
@@ -10,5 +10,9 @@ class SignUpController():
     validation: Validation
 
     def handle(self, request: SignUpControllerRequest):
-        if error := self.validation.validate(request):
-            return bad_request(error)
+        try:
+            if error := self.validation.validate(request):
+                return bad_request(error)
+
+        except Exception as e:
+            return server_error(e)
