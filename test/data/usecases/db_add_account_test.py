@@ -61,3 +61,11 @@ class TestDbAddAccount:
         sut.add(self.params)
 
         assert hasher_spy.plaintext == self.params['password']
+
+    @patch('test.data.mocks.cryptography.HasherSpy.get_password_hash')
+    def test_6_should_return_an_error_if_Hasher_throws(self, mocker):
+        sut, _, _ = self.make_sut()
+        mocker.side_effect = Exception
+
+        with pytest.raises(Exception):
+            sut.add(self.params)
