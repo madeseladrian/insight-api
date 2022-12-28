@@ -10,4 +10,4 @@ pwd_context = CryptContext(schemes=['bcrypt'], deprecated='auto')
 class BCryptAdapter(Hasher):
 
     def get_password_hash(self, password: str) -> str:
-        return ''
+        return pwd_context.hash(password)

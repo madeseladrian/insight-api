@@ -22,3 +22,11 @@ class TestBCryptAdapter:
         hashed_password = sut.get_password_hash('any_value')
 
         assert isinstance(hashed_password, str)
+
+    @patch('src.infra.cryptography.BCryptAdapter.get_password_hash')
+    def test_3_should_return_a_valid_hash_on_hash_success(self, mocker):
+        mocker.return_value = 'hashed'
+        sut = self.make_sut()
+        hashed_password = sut.get_password_hash('any_value')
+
+        assert hashed_password == 'hashed'
