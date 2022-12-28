@@ -1,4 +1,5 @@
 from unittest.mock import patch
+import pytest
 
 from src.infra.cryptography import BCryptAdapter
 
@@ -30,3 +31,11 @@ class TestBCryptAdapter:
         hashed_password = sut.get_password_hash('any_value')
 
         assert hashed_password == 'hashed'
+
+    @patch('src.infra.cryptography.BCryptAdapter.get_password_hash')
+    def test_4_should_throw_if_hash_throws(self, mocker):
+        mocker.side_effect = Exception
+        sut = self.make_sut()
+
+        with pytest.raises(Exception):
+            sut.get_password_hash('any_value')
