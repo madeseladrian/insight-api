@@ -16,3 +16,9 @@ class TestBCryptAdapter:
         sut.get_password_hash('any_value')
 
         mocker.assert_called_once_with('any_value')
+
+    def test_2_should_return_a_string_on_hash_success(self):
+        sut = self.make_sut()
+        hashed_password = sut.get_password_hash('any_value')
+
+        assert isinstance(hashed_password, str)
