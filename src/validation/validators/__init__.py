@@ -1,1 +1,2 @@
 from .email_validation import EmailValidation
+from .required_field_validation import RequiredFieldValidation
