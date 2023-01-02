@@ -1,11 +1,11 @@
 from dataclasses import dataclass
-from typing import Any
 
 from ...domain.features import Authentication
 
-from ..contracts import Validation
+from ..contracts import Controller, Validation
 from ..helpers import (
     bad_request,
+    HttpResponse,
     ok,
     server_error,
     unauthorized
@@ -14,11 +14,11 @@ from ..params import LoginControllerRequest
 
 
 @dataclass
-class LoginController:
+class LoginController(Controller):
     authentication: Authentication
     validation: Validation
 
-    def handle(self, request: LoginControllerRequest) -> Any:
+    def handle(self, request: LoginControllerRequest) -> HttpResponse:
         try:
             if error := self.validation.validate(request):
                 return bad_request(error)
