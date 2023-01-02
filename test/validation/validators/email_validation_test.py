@@ -1,6 +1,7 @@
 from faker import Faker
 from typing import Tuple
 
+from src.presentation.errors import InvalidParamError
 from src.validation.validators import EmailValidation
 
 from ..mocks import EmailValidatorSpy
@@ -27,3 +28,11 @@ class TestEmailValidation:
         sut.validate({self.field_name: email})
 
         assert email_validator_spy.email == email
+
+    def test_2_should_return_an_error_if_EmailValidator_returns_false(self):
+        sut, email_validator_spy = self.make_sut()
+        email_validator_spy.is_email_valid = False
+        email = self.faker.email()
+        error = sut.validate({self.field_name: email})
+
+        assert error == InvalidParamError(self.field_name)
