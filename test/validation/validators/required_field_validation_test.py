@@ -16,3 +16,9 @@ class TestRequiredFieldValidation:
         error = sut.validate({'invalidField': self.faker.word()})
 
         assert error == MissingParamError(self.field_name)
+
+    def test_2_should_return_None_if_validation_succeeds(self):
+        sut = self.make_sut()
+        error = sut.validate({self.field_name: self.faker.word()})
+
+        assert error is None
