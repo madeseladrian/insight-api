@@ -30,3 +30,8 @@ class TestValidationComposite:
     def test_1_should_return_an_error_if_any_validation_fails(self):
         sut, validation_spies = self.make_sut()
         self._validate_composite_helper(validation_spies, sut, 1)
+
+    def test_2_should_return_the_first_error_if_more_than_one_validation_fails(self):
+        sut, validation_spies = self.make_sut()
+        validation_spies[0].error = Exception
+        self._validate_composite_helper(validation_spies, sut, 0)
