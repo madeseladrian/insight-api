@@ -32,3 +32,10 @@ class TestDbAuthentication:
         sut.auth(self.params)
 
         assert load_account_by_email_repository_spy.email == self.params['email']
+
+    def test_2_should_return_None_if_LoadAccountByEmailRepository_returns_None(self):
+        sut, load_account_by_email_repository_spy = self.make_sut()
+        load_account_by_email_repository_spy.result = None
+        authentication_model = sut.auth(self.params)
+
+        assert authentication_model is None
