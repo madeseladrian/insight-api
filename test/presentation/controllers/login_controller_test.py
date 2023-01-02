@@ -82,3 +82,13 @@ class TestAuthenticationController:
 
         assert http_response['status_code'] == 401
         assert http_response == unauthorized()
+
+    @patch('test.presentation.mocks.account.AuthenticationSpy.auth')
+    def test_7_should_return_500_if_AddAccount_throws(self, mocker):
+        sut, _, _ = self.make_sut()
+        exception = Exception()
+        mocker.side_effect = exception
+        http_response = sut.handle(request=self.params)
+
+        assert http_response['status_code'] == 500
+        assert http_response == server_error(error=exception)
