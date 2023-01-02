@@ -13,6 +13,9 @@ class FirebaseHelper:
         self.client_firebase = client_firebase
 
     def get_collection(self) -> Any:
-        return self.client_firebase.collection('users').document(str(uuid.uuid4()))
+        return self.client_firebase.collection('users')
+
+    def get_document(self) -> Any:
+        return self.get_collection().document(str(uuid.uuid4()))
 
 firebase_helper = FirebaseHelper()

@@ -37,3 +37,11 @@ class TestAccountMongoRepository:
         is_valid = sut.add(dict(self.params))
 
         assert is_valid is False
+
+    def test_3_should_return_true_if_email_is_valid(self, clear_db):
+        sut = self.make_sut()
+        collections = firebase_helper.get_document()
+        collections.set(dict(self.params))
+        exists = sut.check_by_email(self.params['email'])
+
+        assert exists
