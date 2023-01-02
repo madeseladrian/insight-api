@@ -35,3 +35,9 @@ class TestValidationComposite:
         sut, validation_spies = self.make_sut()
         validation_spies[0].error = Exception
         self._validate_composite_helper(validation_spies, sut, 0)
+
+    def test_3_should_return_None_if_validation_succeds(self):
+        sut, _ = self.make_sut()
+        error = sut.validate({self.field: self.faker.word()})
+
+        assert error is None
