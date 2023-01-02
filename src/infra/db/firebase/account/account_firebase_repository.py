@@ -1,6 +1,9 @@
 from dataclasses import dataclass
 
-from .....data.contracts.db.account import AddAccountRepository
+from .....data.contracts.db.account import (
+    AddAccountRepository,
+    CheckAccountByEmailRepository
+)
 from .....data.params import (
     AddAccountRepositoryParams,
     AddAccountRepositoryResult
@@ -9,7 +12,10 @@ from .firebase_helper import firebase_helper
 
 
 @dataclass
-class AccountFirebaseRepository(AddAccountRepository):
+class AccountFirebaseRepository(
+    AddAccountRepository,
+    CheckAccountByEmailRepository
+):
 
     def add(self, data: AddAccountRepositoryParams) -> AddAccountRepositoryResult:
         account = firebase_helper.get_document()
