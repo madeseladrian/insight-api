@@ -1,5 +1,7 @@
 from faker import Faker
+import pytest
 from typing import Tuple
+from unittest.mock import patch
 
 from src.presentation.errors import InvalidParamError
 from src.validation.validators import EmailValidation
@@ -36,3 +38,11 @@ class TestEmailValidation:
         error = sut.validate({self.field_name: email})
 
         assert error == InvalidParamError(self.field_name)
+
+    @patch('src.validation.validators.EmailValidation.validate')
+    def test_3_should_throw_if_EmailValidator_throws(self, mocker):
+        sut, email_validator_spy = self.make_sut()
+        mocker.side_effect = Exception
+
+        with pytest.raises(Exception):
+            sut.validate(email_validator_spy)
