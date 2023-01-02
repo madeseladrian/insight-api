@@ -1,2 +1,3 @@
+from .compare_fields_validation import CompareFieldsValidation
 from .email_validation import EmailValidation
 from .required_field_validation import RequiredFieldValidation
