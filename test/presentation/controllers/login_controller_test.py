@@ -8,8 +8,11 @@ from src.domain.params import AuthenticationParams
 from src.presentation.contracts import Validation
 from src.presentation.controllers import LoginController
 from src.presentation.errors import MissingParamError
-from src.presentation.helpers import bad_request, server_error
-
+from src.presentation.helpers import (
+    bad_request,
+    ok,
+    server_error
+)
 from ...domain.mocks import mock_authentication_params
 from ..mocks.account import AuthenticationSpy
 from ..mocks.validation import ValidationSpy
@@ -63,3 +66,10 @@ class TestAuthenticationController:
         sut.handle(request=request)
 
         assert authentication_spy.params == request
+
+    def test_5_should_return_200_if_valid_data_is_provided(self):
+        sut, authentication_spy, _ = self.make_sut()
+        http_response = sut.handle(request=self.params)
+
+        assert http_response['status_code'] == 200
+        assert http_response == ok(authentication_spy.result)
