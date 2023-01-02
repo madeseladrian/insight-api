@@ -1,4 +1,6 @@
+import pytest
 from typing import Tuple
+from unittest.mock import patch
 
 from src.domain.params import AuthenticationParams
 from src.data.usecases import DbAuthentication
@@ -39,3 +41,11 @@ class TestDbAuthentication:
         authentication_model = sut.auth(self.params)
 
         assert authentication_model is None
+
+    @patch('test.data.mocks.db.account.LoadAccountByEmailRepositorySpy.load_by_email')
+    def test_3_should_throw_if_LoadAccountByEmailRepository_throws(self, mocker):
+        sut, _ = self.make_sut()
+        mocker.side_effect = Exception
+
+        with pytest.raises(Exception):
+            sut.auth(self.params)
