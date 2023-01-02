@@ -1,9 +1,15 @@
 from dataclasses import dataclass
 from email_validator import validate_email
 
+from ..validation.contracts import EmailValidator
+
 
 @dataclass
-class EmailValidatorAdapter:
+class EmailValidatorAdapter(EmailValidator):
 
-    def is_valid(self, email: str) -> None:
-        validate_email(email=email, check_deliverability=True)
+    def is_valid(self, email: str) -> bool:
+        try:
+            validation = validate_email(email=email, check_deliverability=True)
+            return validation.email == email
+        except Exception:
+            return False

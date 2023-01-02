@@ -14,4 +14,8 @@ class TestEmailValidatorAdapter:
 
         mocker.assert_called_once_with('any_email')
 
-    
+    def test_2_should_return_false_if_email_validator_returns_false(self):
+        sut = self.make_sut()
+        is_valid = sut.is_valid('invalid.email')
+
+        assert is_valid is False
