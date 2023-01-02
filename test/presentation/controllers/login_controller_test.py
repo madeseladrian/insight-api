@@ -11,7 +11,8 @@ from src.presentation.errors import MissingParamError
 from src.presentation.helpers import (
     bad_request,
     ok,
-    server_error
+    server_error,
+    unauthorized
 )
 from ...domain.mocks import mock_authentication_params
 from ..mocks.account import AuthenticationSpy
@@ -73,3 +74,11 @@ class TestAuthenticationController:
 
         assert http_response['status_code'] == 200
         assert http_response == ok(authentication_spy.result)
+
+    def test_6_should_return_401_if_invalid_credentials_are_provided(self):
+        sut, add_account_spy, _ = self.make_sut()
+        add_account_spy.result = None
+        http_response = sut.handle(self.params)
+
+        assert http_response['status_code'] == 401
+        assert http_response == unauthorized()

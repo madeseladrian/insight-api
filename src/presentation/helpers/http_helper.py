@@ -1,6 +1,6 @@
 from typing import Any
 
-from ..errors import ServerError
+from ..errors import ServerError, UnauthorizedError
 from .http_response import HttpResponse
 
 
@@ -18,3 +18,6 @@ def no_content() -> HttpResponse:
 
 def server_error(error: Exception) -> HttpResponse:
     return HttpResponse(status_code=500, body=ServerError(error=error))
+
+def unauthorized() -> HttpResponse:
+    return HttpResponse(status_code=401, body=UnauthorizedError())
