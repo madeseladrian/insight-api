@@ -1,12 +1,13 @@
 from dataclasses import dataclass
 
+from ...domain.features import AddAccount
 from ...domain.params import AddAccountParams
 from ..contracts.cryptography import Hasher
 from ..contracts.db.account import AddAccountRepository, CheckAccountByEmailRepository
 
 
 @dataclass
-class DbAddAccount():
+class DbAddAccount(AddAccount):
     add_account_repository: AddAccountRepository
     check_account_by_email_repository: CheckAccountByEmailRepository
     hasher: Hasher
