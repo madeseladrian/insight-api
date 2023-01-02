@@ -45,3 +45,13 @@ class TestAccountMongoRepository:
         exists = sut.check_by_email(self.params['email'])
 
         assert exists
+
+    @patch('src.infra.db.firebase.account.AccountFirebaseRepository.check_by_email')
+    def test_4_should_return_false_if_email_is_not_valid(self, mocker, clear_db):
+        mocker.return_value = False
+        sut = self.make_sut()
+        collections = firebase_helper.get_document()
+        collections.set(dict(self.params))
+        exists = sut.check_by_email(self.params['email'])
+
+        assert exists is False
