@@ -24,3 +24,13 @@ class TestCompareFieldsValidation:
         })
 
         assert error == InvalidParamError(self.field_to_compare_name)
+
+    def test_2_should_return_None_if_validation_succeds(self):
+        sut = self.make_sut()
+        value = self.faker.word()
+        error = sut.validate({
+            self.field_name: value,
+            self.field_to_compare_name: value
+        })
+
+        assert error is None
