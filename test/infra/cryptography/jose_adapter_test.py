@@ -1,3 +1,4 @@
+import pytest
 from unittest.mock import patch
 
 from src.infra.cryptography import JoseAdapter
@@ -32,3 +33,11 @@ class TestJoseAdapter:
         encrypted_user_id = sut.encrypt('any_id')
 
         assert encrypted_user_id == 'any_token'
+
+    @patch('src.infra.cryptography.JoseAdapter.encrypt')
+    def test_4_should_throw_if_encrypt_throws(self, mocker):
+        mocker.side_effect = Exception
+        sut = self.make_sut()
+
+        with pytest.raises(Exception):
+            sut.encrypt('any_id')
