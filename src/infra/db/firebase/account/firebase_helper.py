@@ -1,6 +1,5 @@
 from dataclasses import dataclass
 from typing import Any
-import uuid
 
 from firebase_admin.firestore import client
 
@@ -16,6 +15,6 @@ class FirebaseHelper:
         return self.client_firebase.collection('users')
 
     def get_document(self) -> Any:
-        return self.get_collection().document(str(uuid.uuid4()))
+        return self.get_collection().document()
 
 firebase_helper = FirebaseHelper()

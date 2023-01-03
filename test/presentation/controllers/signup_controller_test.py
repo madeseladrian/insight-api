@@ -68,7 +68,9 @@ class TestSignUpController:
         request = self.params
         sut.handle(request=request)
 
-        assert add_account_spy.params == request
+        assert add_account_spy.params['name'] == request['name']
+        assert add_account_spy.params['email'] == request['email']
+        assert add_account_spy.params['password'] == request['password']
 
     def test_5_should_return_403_if_AddAccount_returns_false(self):
         sut, add_account_spy, _ = self.make_sut()

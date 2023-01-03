@@ -55,3 +55,20 @@ class TestAccountMongoRepository:
         exists = sut.check_by_email(self.params['email'])
 
         assert exists is False
+
+    def test_5_should_return_an_account_on_success(self, clear_db):
+        sut = self.make_sut()
+        collections = firebase_helper.get_document()
+        collections.set(dict(self.params))
+        account = sut.load_by_email(self.params['email'])
+
+        assert account
+        assert account['id']
+        assert account['name'] == self.params['name']
+        assert account['password'] == self.params['password']
+
+    def test_6_should_return_None_if_load_by_email_fails(self, clear_db):
+        sut = self.make_sut()
+        account = sut.load_by_email(self.params['email'])
+
+        assert account is None

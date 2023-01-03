@@ -1,4 +1,5 @@
 from dataclasses import dataclass
+import uuid
 
 from ...domain.features import AddAccount
 from ...domain.params import AddAccountParams
@@ -26,6 +27,7 @@ class SignUpController(Controller):
                 return bad_request(error)
 
             if self.add_account.add(AddAccountParams(
+                id=str(uuid.uuid4()),
                 name=request['name'],
                 email=request['email'],
                 password=request['password']

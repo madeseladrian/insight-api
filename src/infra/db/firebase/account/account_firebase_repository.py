@@ -2,11 +2,14 @@ from dataclasses import dataclass
 
 from .....data.contracts.db.account import (
     AddAccountRepository,
-    CheckAccountByEmailRepository
+    CheckAccountByEmailRepository,
+    LoadAccountByEmailRepository,
+    UpdateAccessTokenRepository
 )
 from .....data.params import (
     AddAccountRepositoryParams,
-    AddAccountRepositoryResult
+    AddAccountRepositoryResult,
+    LoadAccountByEmailRepositoryResult
 )
 from .firebase_helper import firebase_helper
 
@@ -14,16 +17,28 @@ from .firebase_helper import firebase_helper
 @dataclass
 class AccountFirebaseRepository(
     AddAccountRepository,
-    CheckAccountByEmailRepository
+    CheckAccountByEmailRepository,
+    LoadAccountByEmailRepository
 ):
 
     def add(self, data: AddAccountRepositoryParams) -> AddAccountRepositoryResult:
         account = firebase_helper.get_document()
         account.set(data)
+
         return bool(account.get().to_dict())
 
     def check_by_email(self, email: str) -> bool:
         account = firebase_helper.get_collection().where(
             'email', '==', email
         ).stream()
+
         return bool([e.to_dict() for e in account])
+
+    def load_by_email(self, email: str) -> LoadAccountByEmailRepositoryResult:
+        account = firebase_helper.get_collection().where(
+            'email', '==', email
+        ).stream()
+
+        data = [e.to_dict() for e in account]
+
+        return data[0] if len(data) == 1 else None
