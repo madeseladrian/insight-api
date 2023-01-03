@@ -18,3 +18,9 @@ class TestJoseAdapter:
         sut.encrypt('any_value')
 
         mocker.assert_called_once_with('any_value')
+
+    def test_2_should_return_a_string_on_encrypt_success(self):
+        sut = self.make_sut()
+        encrypted_user_id = sut.encrypt('any_value')
+
+        assert isinstance(encrypted_user_id, str)
