@@ -48,3 +48,12 @@ class TestBCryptAdapter:
         sut.verify_password('any_value')
 
         mocker.assert_called_once_with('any_value')
+
+    def test_6_should_should_return_true_on_hash_success(self):
+        sut = self.make_sut()
+        is_valid = sut.verify_password(
+            plain_password='any_password',
+            hashed_password='$2b$12$GPdEDnu7ZWAOm2jZphoEZejPoJ/fMfUoV/NXQh9A1mM4Tl3NmXir.'
+        )
+
+        assert is_valid
