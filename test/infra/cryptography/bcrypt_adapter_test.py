@@ -66,3 +66,11 @@ class TestBCryptAdapter:
         )
 
         assert is_valid is False
+
+    @patch('src.infra.cryptography.BCryptAdapter.verify_password')
+    def test_8_should_throw_if_verify_password_throws(self, mocker):
+        mocker.side_effect = Exception
+        sut = self.make_sut()
+
+        with pytest.raises(Exception):
+            sut.verify_password('any_value')
