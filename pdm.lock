@@ -115,6 +115,15 @@ requires_python = ">=3.6,<4.0"
 summary = "DNS toolkit"
 
 [[package]]
+name = "ecdsa"
+version = "0.18.0"
+requires_python = ">=2.6, !=3.0.*, !=3.1.*, !=3.2.*"
+summary = "ECDSA cryptographic signature library (pure python)"
+dependencies = [
+    "six>=1.9.0",
+]
+
+[[package]]
 name = "email-validator"
 version = "1.3.0"
 requires_python = "!=3.0.*,!=3.1.*,!=3.2.*,!=3.3.*,!=3.4.*,>=2.7"
@@ -631,6 +640,26 @@ requires_python = ">=3.7"
 summary = "Read key-value pairs from a .env file and set them as environment variables"
 
 [[package]]
+name = "python-jose"
+version = "3.3.0"
+summary = "JOSE implementation in Python"
+dependencies = [
+    "ecdsa!=0.15",
+    "pyasn1",
+    "rsa",
+]
+
+[[package]]
+name = "python-jose"
+version = "3.3.0"
+extras = ["cryptography"]
+summary = "JOSE implementation in Python"
+dependencies = [
+    "cryptography>=3.4.0",
+    "python-jose==3.3.0",
+]
+
+[[package]]
 name = "python-multipart"
 version = "0.0.5"
 summary = "A streaming multipart parser for Python"
@@ -798,7 +827,7 @@ summary = "An implementation of the WebSocket Protocol (RFC 6455 & 7692)"
 
 [metadata]
 lock_version = "4.0"
-content_hash = "sha256:2908f32c06f6c979a904ca71dcaa6bd1a967b9e9553f41d8d389727f7cffa4ed"
+content_hash = "sha256:b66eab8860c58f50b11a5b43845d82a8821ba4333ea51dd74e9c1fe3ac2a9606"
 
 [metadata.files]
 "anyio 3.6.2" = [
@@ -1014,6 +1043,10 @@ content_hash = "sha256:2908f32c06f6c979a904ca71dcaa6bd1a967b9e9553f41d8d389727f7
 "dnspython 2.2.1" = [
     {url = "https://files.pythonhosted.org/packages/99/fb/e7cd35bba24295ad41abfdff30f6b4c271fd6ac70d20132fa503c3e768e0/dnspython-2.2.1.tar.gz", hash = "sha256:0f7569a4a6ff151958b64304071d370daa3243d15941a7beedf0c9fe5105603e"},
     {url = "https://files.pythonhosted.org/packages/9b/ed/28fb14146c7033ba0e89decd92a4fa16b0b69b84471e2deab3cc4337cc35/dnspython-2.2.1-py3-none-any.whl", hash = "sha256:a851e51367fb93e9e1361732c1d60dab63eff98712e503ea7d92e6eccb109b4f"},
+]
+"ecdsa 0.18.0" = [
+    {url = "https://files.pythonhosted.org/packages/09/d4/4f05f5d16a4863b30ba96c23b23e942da8889abfa1cdbabf2a0df12a4532/ecdsa-0.18.0-py2.py3-none-any.whl", hash = "sha256:80600258e7ed2f16b9aa1d7c295bd70194109ad5a30fdee0eaeefef1d4c559dd"},
+    {url = "https://files.pythonhosted.org/packages/ff/7b/ba6547a76c468a0d22de93e89ae60d9561ec911f59532907e72b0d8bc0f1/ecdsa-0.18.0.tar.gz", hash = "sha256:190348041559e21b22a1d65cee485282ca11a6f81d503fddb84d5017e9ed1e49"},
 ]
 "email-validator 1.3.0" = [
     {url = "https://files.pythonhosted.org/packages/74/44/8c131647fe3c9afdca92abc4a7fe981df55710f142df3aae0ab658258316/email_validator-1.3.0.tar.gz", hash = "sha256:553a66f8be2ec2dea641ae1d3f29017ab89e9d603d4a25cdaac39eefa283d769"},
@@ -1590,6 +1623,10 @@ content_hash = "sha256:2908f32c06f6c979a904ca71dcaa6bd1a967b9e9553f41d8d389727f7
 "python-dotenv 0.21.0" = [
     {url = "https://files.pythonhosted.org/packages/2d/10/ff4f2f5b2a420fd09e1331d63cc87cf4367c5745c0a4ce99cea92b1cbacb/python_dotenv-0.21.0-py3-none-any.whl", hash = "sha256:1684eb44636dd462b66c3ee016599815514527ad99965de77f43e0944634a7e5"},
     {url = "https://files.pythonhosted.org/packages/87/8d/ab7352188f605e3f663f34692b2ed7457da5985857e9e4c2335cd12fb3c9/python-dotenv-0.21.0.tar.gz", hash = "sha256:b77d08274639e3d34145dfa6c7008e66df0f04b7be7a75fd0d5292c191d79045"},
+]
+"python-jose 3.3.0" = [
+    {url = "https://files.pythonhosted.org/packages/bd/2d/e94b2f7bab6773c70efc70a61d66e312e1febccd9e0db6b9e0adf58cbad1/python_jose-3.3.0-py2.py3-none-any.whl", hash = "sha256:9b1376b023f8b298536eedd47ae1089bcdb848f1535ab30555cd92002d78923a"},
+    {url = "https://files.pythonhosted.org/packages/e4/19/b2c86504116dc5f0635d29f802da858404d77d930a25633d2e86a64a35b3/python-jose-3.3.0.tar.gz", hash = "sha256:55779b5e6ad599c6336191246e95eb2293a9ddebd555f796a65f838f07e5d78a"},
 ]
 "python-multipart 0.0.5" = [
     {url = "https://files.pythonhosted.org/packages/46/40/a933ac570bf7aad12a298fc53458115cc74053474a72fbb8201d7dc06d3d/python-multipart-0.0.5.tar.gz", hash = "sha256:f7bb5f611fc600d15fa47b3974c8aa16e93724513b49b5f95c81e6624c83fa43"},
