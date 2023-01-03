@@ -57,3 +57,12 @@ class TestBCryptAdapter:
         )
 
         assert is_valid
+
+    def test_7_should_should_return_false_if_verify_password_fails(self):
+        sut = self.make_sut()
+        is_valid = sut.verify_password(
+            plain_password='any_password',
+            hashed_password='$2b$12$dSDB87pZc.WBs1OcUB1evujMAckGgRyRsQxf6ZvAmr2M6hg.uaLOy'
+        )
+
+        assert is_valid is False
