@@ -39,3 +39,12 @@ class TestBCryptAdapter:
 
         with pytest.raises(Exception):
             sut.get_password_hash('any_value')
+
+    # HashComparer
+
+    @patch('src.infra.cryptography.BCryptAdapter.verify_password')
+    def test_5_should_call_verify_password_with_correct_values(self, mocker):
+        sut = self.make_sut()
+        sut.verify_password('any_value')
+
+        mocker.assert_called_once_with('any_value')
