@@ -5,7 +5,10 @@ from ...domain.features import Authentication
 from ...domain.params import AuthenticationParams
 
 from ..contracts.cryptography import Encrypter, HashComparer
-from ..contracts.db.account import LoadAccountByEmailRepository
+from ..contracts.db.account import (
+    LoadAccountByEmailRepository,
+    UpdateAccessTokenRepository
+)
 
 
 @dataclass
@@ -13,6 +16,7 @@ class DbAuthentication(Authentication):
     encrypter: Encrypter
     hash_comparer: HashComparer
     loadAccount_by_email_repository: LoadAccountByEmailRepository
+    update_access_token_repository: UpdateAccessTokenRepository
 
     def auth(self, authentication: AuthenticationParams) -> Any:
         if account := self.loadAccount_by_email_repository.load_by_email(
@@ -22,4 +26,8 @@ class DbAuthentication(Authentication):
                 plain_password=authentication['password'],
                 hashed_password=account['password']
             ):
-                self.encrypter.encrypt(user_id=account['id'])
+                access_token = self.encrypter.encrypt(user_id=account['id'])
+                self.update_access_token_repository.update_access_token(
+                    user_id=account['id'],
+                    token=access_token
+                )
