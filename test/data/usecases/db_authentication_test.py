@@ -108,3 +108,11 @@ class TestDbAuthentication:
 
         assert update_access_token_repository_spy.user_id == load_account_by_email_repository_spy.result['id']
         assert update_access_token_repository_spy.token == encrypter_spy.token
+
+    @patch('test.data.mocks.db.account.UpdateAccessTokenRepositorySpy.update_access_token')
+    def test_10_should_throw_if_UpdateAccessTokenRepository_throws(self, mocker):
+        sut, _, _, _, _ = self.make_sut()
+        mocker.side_effect = Exception
+
+        with pytest.raises(Exception):
+            sut.auth(self.params)
