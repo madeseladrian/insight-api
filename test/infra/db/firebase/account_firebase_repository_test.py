@@ -72,3 +72,24 @@ class TestAccountMongoRepository:
         account = sut.load_by_email(self.params['email'])
 
         assert account is None
+
+    def test_7_should_update_account_access_token_on_success(self, clear_db):
+        sut = self.make_sut()
+        collections = firebase_helper.get_document()
+        collections.set(dict(self.params))
+        fake_account = firebase_helper.get_collection().where(
+            'id', '==', self.params['id']
+        ).stream()
+        fake_account = [f.to_dict() for f in fake_account][0]
+
+        assert not fake_account.get('access_token')
+
+        access_token = self.faker.uuid4()
+        sut.update_access_token(user_id=fake_account['id'], token=access_token)
+        account = firebase_helper.get_collection().where(
+            'id', '==', fake_account['id']
+        ).stream()
+        account = [a.to_dict() for a in account][0]
+
+        assert account
+        assert account['access_token'] == access_token
