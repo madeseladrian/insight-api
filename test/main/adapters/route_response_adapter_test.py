@@ -43,3 +43,16 @@ class TestRouteResponseAdapter:
         assert isinstance(excinfo.value, HTTPException)
         assert excinfo.value.status_code == http_response['status_code']
         assert excinfo.value.detail == http_response['body']
+
+    def test_5_should_adapter_return_an_unauthorized_error(self):
+        http_response = HttpResponse(
+            status_code=401,
+            body='Unauthorized Error'
+        )
+
+        with pytest.raises(HTTPException) as excinfo:
+            route_response_adapter(http_response)
+
+        assert isinstance(excinfo.value, HTTPException)
+        assert excinfo.value.status_code == http_response['status_code']
+        assert excinfo.value.detail == http_response['body']

@@ -15,6 +15,10 @@ def route_response_adapter(http_response: HttpResponse) -> Any:
           status_code=status.HTTP_400_BAD_REQUEST,
           detail=f"{http_response['body']}"
         )
+        case 401: raise HTTPException(
+          status_code=status.HTTP_401_UNAUTHORIZED,
+          detail=f"{http_response['body']}"
+        )
         case _: raise HTTPException(
             status_code=status.HTTP_500_INTERNAL_SERVER_ERROR,
             detail=f"{http_response['body']}"
