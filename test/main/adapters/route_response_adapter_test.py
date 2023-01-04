@@ -19,3 +19,11 @@ class TestRouteResponseAdapter:
         )
 
         assert route_response_adapter(http_response) == http_response
+
+    def test_3_should_adapter_return_no_data_on_204(self):
+        http_response = HttpResponse(
+            status_code=204,
+            body=True
+        )
+
+        assert route_response_adapter(http_response) == http_response
