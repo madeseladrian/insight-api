@@ -82,3 +82,16 @@ class TestRouteResponseAdapter:
         assert isinstance(excinfo.value, HTTPException)
         assert excinfo.value.status_code == http_response['status_code']
         assert excinfo.value.detail == http_response['body']
+
+    def test_8_should_adapter_return_a_server_error(self):
+        http_response = HttpResponse(
+            status_code=500,
+            body='Server Error'
+        )
+
+        with pytest.raises(HTTPException) as excinfo:
+            route_response_adapter(http_response)
+
+        assert isinstance(excinfo.value, HTTPException)
+        assert excinfo.value.status_code == http_response['status_code']
+        assert excinfo.value.detail == http_response['body']
