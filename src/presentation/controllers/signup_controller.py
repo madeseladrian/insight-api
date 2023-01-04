@@ -10,6 +10,7 @@ from ..errors import EmailInUseError
 from ..helpers import (
     bad_request,
     forbidden,
+    ok,
     server_error
 )
 from ..params import SignUpControllerRequest
@@ -32,10 +33,12 @@ class SignUpController(Controller):
                 email=request['email'],
                 password=request['password']
             )):
-                self.authentication.auth(AuthenticationParams(
+                authentication = self.authentication.auth(AuthenticationParams(
                     email=request['email'],
                     password=request['password']
                 ))
+
+                return ok(authentication)
 
             else:
                 return forbidden(EmailInUseError())
