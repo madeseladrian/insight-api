@@ -7,7 +7,7 @@ from src.main.config import create_app
 
 try:
     # Use a service account.
-    cred = credentials.Certificate('service_account.json')
+    cred = credentials.Certificate('google_credentials.json')
     firebase_admin.initialize_app(cred)
     firebase_helper.connect(client())
     app = create_app()
