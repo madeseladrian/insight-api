@@ -1,0 +1,11 @@
+**/__pycache__
+.pytest_cache
+.venv
+documentation
+test
+.coverage
+.flake8
+.gitignore
+.pre-commit-config.yaml
+mypy.ini
+readme.md
