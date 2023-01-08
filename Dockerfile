@@ -20,4 +20,4 @@ RUN pdm install --prod
 ENV PATH='/home/python/app/.venv/bin:$PATH'
 
 # Roda a aplicação na porta 80
-CMD ["uvicorn", "main:app", "--host", "0.0.0.0", "--port", "80"]
+CMD ["uvicorn", "main:app", "--host", "0.0.0.0", "--port", "8000"]
