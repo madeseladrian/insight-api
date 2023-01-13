@@ -13,19 +13,21 @@ class TestAddAccount:
     @patch.multiple(AddGlasses, __abstractmethods__=set())
     def test_2_should_AddGlasses_raise_a_NotImplementedError_if_not_implemented(self):
         params = AddGlassesParams(
-          uid_image='any_uid',
-          model='any_model',
-          format='any_format',
-          gender='any_gender',
-          public='any_public',
-          category='any_category',
-          frame_color='any_color',
-          lens_color='any_color',
-          size_bridge=0.0,
-          height_frame=0.0,
-          size_temples=0.0,
-          price=0.0,
-          additional_info='any_info'
+            user_id='any_id',
+            glasses_id='any_id',
+            uid_image='any_uid',
+            model='any_model',
+            format='any_format',
+            gender='any_gender',
+            public='any_public',
+            category='any_category',
+            frame_color='any_color',
+            lens_color='any_color',
+            size_bridge=0.0,
+            height_frame=0.0,
+            size_temples=0.0,
+            price=0.0,
+            additional_info='any_info'
         )
         add_glasses = AddGlasses()
 

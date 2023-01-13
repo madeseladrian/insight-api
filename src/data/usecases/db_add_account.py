@@ -1,7 +1,7 @@
 from dataclasses import dataclass
 
 from ...domain.features import AddAccount
-from ...domain.params import AddAccountParams
+from ...domain.params import AddAccountParams, AddAccountResult
 from ..contracts.cryptography import Hasher
 from ..contracts.db.account import AddAccountRepository, CheckAccountByEmailRepository
 
@@ -12,7 +12,7 @@ class DbAddAccount(AddAccount):
     check_account_by_email_repository: CheckAccountByEmailRepository
     hasher: Hasher
 
-    def add(self, account: AddAccountParams):
+    def add(self, account: AddAccountParams) -> AddAccountResult:
         exists = self.check_account_by_email_repository.check_by_email(email=account['email'])
         is_valid = False
 

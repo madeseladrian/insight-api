@@ -1,6 +1,5 @@
 from typing import Tuple
 
-from src.domain.features import AddGlasses
 from src.data.usecases import DbAddGlasses
 
 from ...domain.mocks import mock_add_glasses_params
@@ -12,7 +11,7 @@ class TestDbAddSurvey:
     params = mock_add_glasses_params()
 
     SutTypes = Tuple[
-        AddGlasses,
+        DbAddGlasses,
         AddGlassesRepositorySpy
     ]
 
@@ -31,3 +30,15 @@ class TestDbAddSurvey:
         sut.add(self.params)
 
         assert add_glasses_repository_spy.data == self.params
+
+    def test_2_should_return_true_if_AddGlassesRepository_add_data(self):
+        sut, _ = self.make_sut()
+        is_valid = sut.add(self.params)
+
+        assert is_valid
+
+    def test_2_should_return_true_if_AddGlassesRepository_add_data(self):
+        sut, _ = self.make_sut()
+        is_valid = sut.add(self.params)
+
+        assert is_valid
