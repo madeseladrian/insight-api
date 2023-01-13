@@ -5,7 +5,7 @@ from src.infra.db.firebase.log import LogFirebaseRepository
 from src.infra.db.firebase import firebase_helper
 
 
-class TestLogMongoRepository:
+class TestLogFirebaseRepository:
     faker = Faker()
     error = faker.word()
     firebase_helper.connect(MockFirestore())

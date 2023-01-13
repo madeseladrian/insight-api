@@ -8,7 +8,7 @@ from src.infra.db.firebase.account import AccountFirebaseRepository
 from ....domain.mocks import mock_add_account_params
 
 
-class TestAccountMongoRepository:
+class TestAccountFirebaseRepository:
     # SetUp
     faker = Faker()
     params = mock_add_account_params()
