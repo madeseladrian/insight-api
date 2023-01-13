@@ -1,2 +1,3 @@
-from .add_account_repository import AddAccountRepositoryParams, AddAccountRepositoryResult
-from .load_account_by_email_repository import LoadAccountByEmailRepositoryResult
+from .add_account_repository_params import AddAccountRepositoryParams, AddAccountRepositoryResult
+from .add_glasses_repository_params import AddGlassesRepositoryParams, AddGlassesRepositoryResult
+from .load_account_by_email_repository_params import LoadAccountByEmailRepositoryResult
