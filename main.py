@@ -2,7 +2,7 @@ import firebase_admin
 from firebase_admin import credentials
 from firebase_admin.firestore import client
 
-from src.infra.db.firebase.account import firebase_helper
+from src.infra.db.firebase import firebase_helper
 from src.main.config import create_app
 
 try:

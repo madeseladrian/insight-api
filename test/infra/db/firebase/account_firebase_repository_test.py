@@ -3,10 +3,8 @@ from mockfirestore import MockFirestore
 import pytest
 from unittest.mock import patch
 
-from src.infra.db.firebase.account import (
-    AccountFirebaseRepository,
-    firebase_helper
-)
+from src.infra.db.firebase import firebase_helper
+from src.infra.db.firebase.account import AccountFirebaseRepository
 from ....domain.mocks import mock_add_account_params
 
 
@@ -40,7 +38,7 @@ class TestAccountMongoRepository:
 
     def test_3_should_return_true_if_email_is_valid(self, clear_db):
         sut = self.make_sut()
-        collections = firebase_helper.get_document()
+        collections = firebase_helper.get_document('users')
         collections.set(dict(self.params))
         exists = sut.check_by_email(self.params['email'])
 
@@ -50,7 +48,7 @@ class TestAccountMongoRepository:
     def test_4_should_return_false_if_email_is_not_valid(self, mocker, clear_db):
         mocker.return_value = False
         sut = self.make_sut()
-        collections = firebase_helper.get_document()
+        collections = firebase_helper.get_document('users')
         collections.set(dict(self.params))
         exists = sut.check_by_email(self.params['email'])
 
@@ -58,7 +56,7 @@ class TestAccountMongoRepository:
 
     def test_5_should_return_an_account_on_success(self, clear_db):
         sut = self.make_sut()
-        collections = firebase_helper.get_document()
+        collections = firebase_helper.get_document('users')
         collections.set(dict(self.params))
         account = sut.load_by_email(self.params['email'])
 
@@ -75,9 +73,9 @@ class TestAccountMongoRepository:
 
     def test_7_should_update_account_access_token_on_success(self, clear_db):
         sut = self.make_sut()
-        collections = firebase_helper.get_document()
+        collections = firebase_helper.get_document('users')
         collections.set(dict(self.params))
-        fake_account = firebase_helper.get_collection().where(
+        fake_account = firebase_helper.get_collection('users').where(
             'id', '==', self.params['id']
         ).stream()
         fake_account = [f.to_dict() for f in fake_account][0]
@@ -86,7 +84,7 @@ class TestAccountMongoRepository:
 
         access_token = self.faker.uuid4()
         sut.update_access_token(user_id=fake_account['id'], token=access_token)
-        account = firebase_helper.get_collection().where(
+        account = firebase_helper.get_collection('users').where(
             'id', '==', fake_account['id']
         ).stream()
         account = [a.to_dict() for a in account][0]

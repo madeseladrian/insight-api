@@ -1,0 +1,1 @@
+from .log_firebase_repository import LogFirebaseRepository

@@ -11,7 +11,7 @@ from .....data.params import (
     AddAccountRepositoryResult,
     LoadAccountByEmailRepositoryResult
 )
-from .firebase_helper import firebase_helper
+from ..firebase_helper import firebase_helper
 
 
 @dataclass
@@ -23,20 +23,20 @@ class AccountFirebaseRepository(
 ):
 
     def add(self, data: AddAccountRepositoryParams) -> AddAccountRepositoryResult:
-        account = firebase_helper.get_document()
+        account = firebase_helper.get_document('users')
         account.set(data)
 
         return bool(account.get().to_dict())
 
     def check_by_email(self, email: str) -> bool:
-        account = firebase_helper.get_collection().where(
+        account = firebase_helper.get_collection('users').where(
             'email', '==', email
         ).stream()
 
         return bool([e.to_dict() for e in account])
 
     def load_by_email(self, email: str) -> LoadAccountByEmailRepositoryResult:
-        account = firebase_helper.get_collection().where(
+        account = firebase_helper.get_collection('users').where(
             'email', '==', email
         ).stream()
 
@@ -45,11 +45,11 @@ class AccountFirebaseRepository(
         return data[0] if len(data) == 1 else None
 
     def update_access_token(self, user_id: str, token: str) -> None:
-        account = firebase_helper.get_collection().where(
+        account = firebase_helper.get_collection('users').where(
             'id', '==', user_id
         ).stream()
 
         document_id = [doc.id for doc in account][0]
-        firebase_helper.get_collection().document(document_id).update({
+        firebase_helper.get_collection('users').document(document_id).update({
             'access_token': token
         })

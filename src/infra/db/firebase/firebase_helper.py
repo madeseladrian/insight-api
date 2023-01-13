@@ -11,10 +11,10 @@ class FirebaseHelper:
     def connect(self, client_firebase: client) -> None:
         self.client_firebase = client_firebase
 
-    def get_collection(self) -> Any:
-        return self.client_firebase.collection('users')
+    def get_collection(self, collection: str) -> Any:
+        return self.client_firebase.collection(collection)
 
-    def get_document(self) -> Any:
-        return self.get_collection().document()
+    def get_document(self, collection: str) -> Any:
+        return self.get_collection(collection).document()
 
 firebase_helper = FirebaseHelper()
