@@ -1,6 +1,7 @@
 from faker import Faker
 from mockfirestore import MockFirestore
 import pytest
+from unittest.mock import patch
 
 from src.infra.db.firebase import firebase_helper
 from src.infra.db.firebase.glasses import GlassesFirebaseRepository
@@ -26,3 +27,12 @@ class TestGlassesFirebaseRepository:
         is_valid = sut.add(dict(self.params))
 
         assert is_valid
+
+    @patch('src.infra.db.firebase.glasses.GlassesFirebaseRepository.add')
+    def test_2_should_return_false_on_fail(self, mocker, clear_db):
+        mocker.return_value = False
+
+        sut = self.make_sut()
+        is_valid = sut.add(dict(self.params))
+
+        assert is_valid is False
