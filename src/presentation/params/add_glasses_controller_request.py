@@ -1,8 +1,6 @@
 from typing import TypedDict
 
-
-class AddGlassesParams(TypedDict):
-    uid_image: str
+class AddGlassesControllerRequest(TypedDict):
     user_id: str
     glasses_id: str
     model: str
@@ -18,5 +16,3 @@ class AddGlassesParams(TypedDict):
     size_temples: float
     price: float
     additional_info: str
-
-AddGlassesResult = bool
