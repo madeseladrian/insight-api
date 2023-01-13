@@ -1,2 +1,3 @@
 from .add_account_params import AddAccountParams, AddAccountResult
+from .add_glasses_params import AddGlassesParams, AddGlassesResult
 from .authentication_params import AuthenticationParams, AuthenticationResult
