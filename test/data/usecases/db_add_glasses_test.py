@@ -37,8 +37,17 @@ class TestDbAddSurvey:
 
         assert is_valid
 
-    def test_2_should_return_true_if_AddGlassesRepository_add_data(self):
-        sut, _ = self.make_sut()
+    def test_3_should_return_false_if_AddGlassesRepository_does_not_add_data(self):
+        sut, add_glasses_repository_spy = self.make_sut()
+        add_glasses_repository_spy.result = False
         is_valid = sut.add(self.params)
 
-        assert is_valid
+        assert not is_valid
+
+    @patch('test.data.mocks.CheckAccountByEmailRepositorySpy.check_by_email')
+    def test_4_should_return_an_error_if_CheckAccountByEmailRepository_throws(self, mocker):
+        sut, _, _, _ = self.make_sut()
+        mocker.side_effect = Exception
+
+        with pytest.raises(Exception):
+            sut.add(self.params)
