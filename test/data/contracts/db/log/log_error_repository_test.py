@@ -5,7 +5,7 @@ from unittest.mock import patch
 from src.data.contracts.db.log import LogErrorRepository
 
 
-class TestAddAccountRepository:
+class TestLogErrorRepository:
     def test_1_should_LogErrorRepository_is_an_abstract_class(self):
         assert isabstract(LogErrorRepository)
 
