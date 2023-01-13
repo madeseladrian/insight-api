@@ -4,12 +4,12 @@ from typing import Tuple
 from src.main.decorators import LogControllerDecorator
 
 from ...data.mocks.log import LogErrorRepositorySpy
-from .mocks import LogControllerSpy,  mock_server_error
+from .mocks import LogControllerSpy, mock_server_error
 
 
 class TestLogControllerDecorator:
     faker = Faker()
-    request = {'status': 201, 'body': True}
+    request = {'status': 200, 'body': True}
 
     SutTypes = Tuple[
         LogControllerDecorator,
