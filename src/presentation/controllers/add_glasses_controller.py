@@ -1,23 +1,22 @@
 from dataclasses import dataclass
-from typing import Any
 
 from ...domain.features import AddGlasses
 
-from ..contracts import Validation
+from ..contracts import Controller, Validation
 from ..helpers import (
     bad_request,
+    HttpResponse,
     no_content,
     server_error
 )
 from ..params import AddGlassesControllerRequest
 
-
 @dataclass
-class AddGlassesController:
+class AddGlassesController(Controller):
     add_glasses: AddGlasses
     validation: Validation
 
-    def handle(self, request: AddGlassesControllerRequest) -> Any:
+    def handle(self, request: AddGlassesControllerRequest) -> HttpResponse:
         try:
             if error := self.validation.validate(request):
                 return bad_request(error)
