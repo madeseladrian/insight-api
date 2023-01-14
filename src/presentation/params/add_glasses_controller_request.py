@@ -2,7 +2,6 @@ from typing import TypedDict
 
 class AddGlassesControllerRequest(TypedDict):
     user_id: str
-    glasses_id: str
     model: str
     format: str
     gender: str

@@ -826,7 +826,7 @@ requires_python = ">=3.7"
 summary = "An implementation of the WebSocket Protocol (RFC 6455 & 7692)"
 
 [metadata]
-lock_version = "4.0"
+lock_version = "4.1"
 content_hash = "sha256:b66eab8860c58f50b11a5b43845d82a8821ba4333ea51dd74e9c1fe3ac2a9606"
 
 [metadata.files]

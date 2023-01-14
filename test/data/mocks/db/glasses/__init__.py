@@ -1,1 +1,2 @@
 from .add_glasses_repository_spy import AddGlassesRepositorySpy
+from .add_image_storage_spy import AddImageStorageSpy

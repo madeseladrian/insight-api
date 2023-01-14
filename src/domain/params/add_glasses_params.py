@@ -1,10 +1,11 @@
+from tempfile import SpooledTemporaryFile
 from typing import TypedDict
 
 
 class AddGlassesParams(TypedDict):
-    url_image: str
+    image: SpooledTemporaryFile
+    image_type: str
     user_id: str
-    glasses_id: str
     model: str
     format: str
     gender: str
