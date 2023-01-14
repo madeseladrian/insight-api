@@ -14,4 +14,4 @@ class TestAddImageStorage:
         add_image_storage = AddImageStorage()
 
         with pytest.raises(NotImplementedError, match='Should implement method: add_image'):
-            add_image_storage.add_image(image=0)
+            add_image_storage.add_image(image='', image_type='')
