@@ -19,5 +19,3 @@ class AddGlassesParams(TypedDict):
     size_temples: float
     price: float
     additional_info: str
-
-AddGlassesResult = bool

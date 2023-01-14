@@ -1,6 +1,10 @@
 from typing import TypedDict
+from tempfile import SpooledTemporaryFile
+
 
 class AddGlassesControllerRequest(TypedDict):
+    image: SpooledTemporaryFile
+    image_type: str
     user_id: str
     model: str
     format: str
