@@ -2,7 +2,7 @@ from typing import TypedDict
 
 
 class AddGlassesParams(TypedDict):
-    uid_image: str
+    url_image: str
     user_id: str
     glasses_id: str
     model: str

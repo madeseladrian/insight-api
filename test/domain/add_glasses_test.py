@@ -15,7 +15,7 @@ class TestAddAccount:
         params = AddGlassesParams(
             user_id='any_id',
             glasses_id='any_id',
-            uid_image='any_uid',
+            url_image='any_url',
             model='any_model',
             format='any_format',
             gender='any_gender',

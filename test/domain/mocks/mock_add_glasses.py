@@ -8,7 +8,7 @@ def mock_add_glasses_params() -> AddGlassesParams:
     return AddGlassesParams(
         user_id=faker.uuid4(),
         glasses_id=faker.uuid4(),
-        uid_image=faker.image_url(),
+        url_image=faker.image_url(),
         model=faker.word(),
         format=faker.word(),
         gender=faker.word(),
