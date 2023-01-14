@@ -38,7 +38,15 @@ class TestDbAddGlasses:
         assert add_image_storage_spy.image == self.params['image']
         assert add_image_storage_spy.image_type == self.params['image_type']
 
-    def test_2_should_call_AddGlassesRepository_with_correct_values(self):
+    @patch('test.data.mocks.db.glasses.AddImageStorageSpy.add_image')
+    def test_2_should_throws_if_AddImageStorage_throws(self, mocker):
+        sut, _, _ = self.make_sut()
+        mocker.side_effect = Exception
+
+        with pytest.raises(Exception):
+            sut.add(self.params)
+
+    def test_3_should_call_AddGlassesRepository_with_correct_values(self):
         sut, add_image_storage_spy, add_glasses_repository_spy = self.make_sut()
         sut.add(self.params)
         url_image = add_image_storage_spy.url_image
@@ -47,13 +55,13 @@ class TestDbAddGlasses:
 
         assert add_glasses_repository_spy.data == params_repository
 
-    def test_3_should_return_true_if_AddGlassesRepository_add_data(self):
+    def test_4_should_return_true_if_AddGlassesRepository_add_data(self):
         sut, _, _ = self.make_sut()
         is_valid = sut.add(self.params)
 
         assert is_valid
 
-    def test_4_should_return_false_if_AddGlassesRepository_does_not_add_data(self):
+    def test_5_should_return_false_if_AddGlassesRepository_does_not_add_data(self):
         sut, _, add_glasses_repository_spy = self.make_sut()
         add_glasses_repository_spy.result = False
         is_valid = sut.add(self.params)
@@ -61,7 +69,7 @@ class TestDbAddGlasses:
         assert not is_valid
 
     @patch('test.data.mocks.db.glasses.AddGlassesRepositorySpy.add')
-    def test_5_should_return_an_error_if_AddGlassesRepository_throws(self, mocker):
+    def test_6_should_return_an_error_if_AddGlassesRepository_throws(self, mocker):
         sut, _, _ = self.make_sut()
         mocker.side_effect = Exception
 
