@@ -7,8 +7,8 @@ from src.main.usecases import make_add_glasses_validation
 
 class TestMakeAddGlassesValidation:
     fields: list = [
-        'image',
-        'image_type',
+        'url_image',
+        'glasses_id',
         'user_id',
         'model',
         'format',

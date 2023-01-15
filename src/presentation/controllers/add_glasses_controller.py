@@ -11,6 +11,7 @@ from ..helpers import (
 )
 from ..params import AddGlassesControllerRequest
 
+
 @dataclass
 class AddGlassesController(Controller):
     add_glasses: AddGlasses

@@ -7,8 +7,8 @@ from ...validation.validators import (
 )
 
 fields: list = [
-    'image',
-    'image_type',
+    'url_image',
+    'glasses_id',
     'user_id',
     'model',
     'format',
