@@ -1,7 +1,8 @@
 from typing import Tuple
+from unittest.mock import patch
 
 from src.presentation.errors import AccessDeniedError
-from src.presentation.helpers import forbidden
+from src.presentation.helpers import forbidden, ok, server_error
 from src.presentation.middlewares import AuthMiddleware
 from src.presentation.params import AuthMiddlewareRequest
 
@@ -42,3 +43,21 @@ class TestAuthMiddleware:
         http_response = sut.handle(self.params)
 
         assert http_response == forbidden(AccessDeniedError())
+
+    def test_4_should_return_200_if_LoadAccountByToken_returns_an_account(self):
+        sut, load_account_by_token_spy = self.make_sut()
+        http_response = sut.handle(self.params)
+
+        assert http_response == ok({
+            'user_id': load_account_by_token_spy.result.get('id')
+        })
+
+    @patch('test.presentation.mocks.account.LoadAccountByTokenSpy.load')
+    def test_5_should_return_500_if_LoadAccountByToken_throws(self, mocker):
+        sut, _ = self.make_sut()
+        exception = Exception()
+        mocker.side_effect = exception
+        http_response = sut.handle(request=self.params)
+
+        assert http_response['status_code'] == 500
+        assert http_response == server_error(error=exception)
