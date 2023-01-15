@@ -12,9 +12,9 @@ class DbLoadAccountByToken:
 
     def load(self, access_token: str, role: Optional[str] = None) -> Any:
         if self.decrypter.decrypt(token=access_token):
-            self.load_account_by_token_repository.load_by_token(
+            if account := self.load_account_by_token_repository.load_by_token(
                 token=access_token,
                 role=role
-            )
-            return None
+            ):
+                return account
         return None
