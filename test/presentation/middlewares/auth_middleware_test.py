@@ -35,3 +35,10 @@ class TestAuthMiddleware:
         http_response = sut.handle({'access_token': None})
 
         assert http_response == forbidden(AccessDeniedError())
+
+    def test_3_should_return_403_if_LoadAccountByToken_returns_None(self):
+        sut, load_account_by_token_spy = self.make_sut()
+        load_account_by_token_spy.result = None
+        http_response = sut.handle(self.params)
+
+        assert http_response == forbidden(AccessDeniedError())
