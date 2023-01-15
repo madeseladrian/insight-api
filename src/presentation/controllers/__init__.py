@@ -1,3 +1,4 @@
 from .add_glasses_controller import AddGlassesController
+from .add_image_controller import AddImageController
 from .login_controller import LoginController
 from .signup_controller import SignUpController

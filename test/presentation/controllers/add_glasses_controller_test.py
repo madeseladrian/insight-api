@@ -14,7 +14,7 @@ from ..mocks.glasses import AddGlassesSpy
 from ..mocks.validation import ValidationSpy
 
 
-class TestAddSurveyController:
+class TestAddGlassesController:
     # SetUp
     faker = Faker()
     params = mock_add_glasses_params()

@@ -1,3 +1,4 @@
 from .add_glasses_controller_request import AddGlassesControllerRequest
+from .add_image_controller_request import AddImageControllerRequest
 from .login_controller_request import LoginControllerRequest
 from .signup_controller_request import SignUpControllerRequest
