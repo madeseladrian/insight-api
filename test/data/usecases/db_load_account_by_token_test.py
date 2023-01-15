@@ -1,5 +1,7 @@
 from typing import Tuple
 from faker import Faker
+import pytest
+from unittest.mock import patch
 
 from src.data.usecases import DbLoadAccountByToken
 from ..mocks.cryptography import DecrypterSpy
@@ -35,3 +37,11 @@ class TestDbLoadAccountByToken:
         account = sut.load(access_token=self.token, role=self.role)
 
         assert account is None
+
+    @patch('test.data.mocks.cryptography.DecrypterSpy.decrypt')
+    def test_3_should_throw_if_Decrypter_throws(self, mocker):
+        sut, _ = self.make_sut()
+        mocker.side_effect = Exception
+
+        with pytest.raises(Exception):
+            sut.load(access_token=self.token, role=self.role)
