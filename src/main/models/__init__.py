@@ -1,1 +1,2 @@
+from .image_response_model import ImageResponseModel
 from .login_response_model import LoginResponseModel

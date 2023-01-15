@@ -6,7 +6,7 @@ from ..contracts import Controller, Validation
 from ..helpers import (
     bad_request,
     HttpResponse,
-    no_content,
+    ok,
     server_error
 )
 from ..params import AddImageControllerRequest
@@ -22,7 +22,7 @@ class AddImageController(Controller):
             if error := self.validation.validate(request):
                 return bad_request(error)
 
-            self.add_image.add_image(request)
-            return no_content()
+            image_model = self.add_image.add_image(request)
+            return ok(image_model)
         except Exception as e:
             return server_error(e)
