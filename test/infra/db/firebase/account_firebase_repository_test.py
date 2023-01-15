@@ -104,7 +104,7 @@ class TestAccountFirebaseRepository:
         })
         user_id = sut.load_by_token(self.access_token)
 
-        assert user_id == self.params['id']
+        assert user_id['id'] == self.params['id']
 
     def test_9_should_return_None_if_load_by_token_fails(self, clear_db):
         sut = self.make_sut()

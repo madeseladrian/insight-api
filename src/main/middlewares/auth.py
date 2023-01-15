@@ -12,5 +12,5 @@ def auth(token: str = Depends(oauth2_login)) -> str:
     middleware = auth_middleware_factory()
     http_response = middleware.handle(AuthMiddlewareRequest(access_token=token))
     adapter = route_response_adapter(http_response)
-    body = adapter.get('body')
-    return body.get('user_id')
+    body = adapter['body']
+    return body['user_id']

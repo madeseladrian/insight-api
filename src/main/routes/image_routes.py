@@ -6,8 +6,8 @@ from ...presentation.params import AddImageControllerRequest
 from ..adapters import route_response_adapter
 from ..docs import glasses_responses
 from ..factories.controllers import add_image_controller_factory
-from ..middlewares import auth
 from ..models import ImageResponseModel
+from ..middlewares import auth
 
 
 router = APIRouter(

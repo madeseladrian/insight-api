@@ -54,7 +54,7 @@ class AccountFirebaseRepository(
         ).stream()
 
         data = [doc.to_dict() for doc in account]
-        return data[0]['id'] if len(data) == 1 else None
+        return LoadAccountByTokenRepositoryResult(id=data[0]['id']) if len(data) == 1 else None
 
     def update_access_token(self, user_id: str, token: str) -> None:
         account = firebase_helper.get_collection('users').where(
