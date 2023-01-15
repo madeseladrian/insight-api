@@ -1,3 +1,4 @@
-from .glasses_controller_factory import add_glasses_controller_factory
+from .add_glasses_controller_factory import add_glasses_controller_factory
+from .add_image_controller_factory import add_image_controller_factory
 from .login_controller_factory import login_controller_factory
 from .signup_controller_factory import signup_controller_factory
