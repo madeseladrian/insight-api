@@ -71,3 +71,13 @@ class TestAddGlassesController:
 
         assert http_response['status_code'] == 204
         assert http_response['body'] is None
+
+    @patch('test.presentation.mocks.glasses.AddGlassesSpy.add')
+    def test_6_should_return_500_if_AddGlasses_throws(self, mocker):
+        sut, _, _ = self.make_sut()
+        exception = Exception()
+        mocker.side_effect = exception
+        http_response = sut.handle(request=self.params)
+
+        assert http_response['status_code'] == 500
+        assert http_response == server_error(error=exception)
