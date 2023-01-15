@@ -62,3 +62,11 @@ class TestJoseAdapter:
         decrypted_user_id = sut.decrypt(encrypted_user_id)
 
         assert decrypted_user_id == 'any_id'
+
+    @patch('src.infra.cryptography.JoseAdapter.decrypt')
+    def test_8_should_throw_if_decrypt_throws(self, mocker):
+        mocker.side_effect = Exception
+        sut = self.make_sut()
+
+        with pytest.raises(Exception):
+            sut.decrypt('any_id')
