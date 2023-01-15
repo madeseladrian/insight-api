@@ -1,1 +1,2 @@
 from .glasses_firebase_repository import GlassesFirebaseRepository
+from .glasses_image_storage_repository import GlassesImageStorageRepository
