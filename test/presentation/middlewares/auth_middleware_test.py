@@ -1,5 +1,7 @@
 from typing import Tuple
 
+from src.presentation.errors import AccessDeniedError
+from src.presentation.helpers import forbidden
 from src.presentation.middlewares import AuthMiddleware
 from src.presentation.params import AuthMiddlewareRequest
 
@@ -27,3 +29,9 @@ class TestAuthMiddleware:
         sut.handle(self.params)
 
         assert load_account_by_token_spy.access_token == self.params['access_token']
+
+    def test_2_should_return_403_if_no_access_token_exists_in_headers(self):
+        sut, _ = self.make_sut()
+        http_response = sut.handle({'access_token': None})
+
+        assert http_response == forbidden(AccessDeniedError())
