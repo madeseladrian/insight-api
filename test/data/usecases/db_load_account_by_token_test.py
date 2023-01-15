@@ -5,6 +5,7 @@ from unittest.mock import patch
 
 from src.data.usecases import DbLoadAccountByToken
 from ..mocks.cryptography import DecrypterSpy
+from ..mocks.db.account import LoadAccountByTokenRepositorySpy
 
 
 class TestDbLoadAccountByToken:
@@ -15,24 +16,27 @@ class TestDbLoadAccountByToken:
 
     SutTypes = Tuple[
         DbLoadAccountByToken,
-        DecrypterSpy
+        DecrypterSpy,
+        LoadAccountByTokenRepositorySpy
     ]
 
     def make_sut(self) -> SutTypes:
         decrypter_spy = DecrypterSpy()
+        load_account_by_token_repository_spy = LoadAccountByTokenRepositorySpy()
         sut = DbLoadAccountByToken(
-            decrypter=decrypter_spy
+            decrypter=decrypter_spy,
+            load_account_by_token_repository=load_account_by_token_repository_spy
         )
-        return sut, decrypter_spy
+        return sut, decrypter_spy, load_account_by_token_repository_spy
 
     def test_1_should_call_Decrypter_with_correct_token(self):
-        sut, decrypter_spy = self.make_sut()
+        sut, decrypter_spy, _ = self.make_sut()
         sut.load(access_token=self.token, role=self.role)
 
         assert decrypter_spy.token == self.token
 
     def test_2_should_return_None_if_Decrypter_returns_None(self):
-        sut, decrypter_spy = self.make_sut()
+        sut, decrypter_spy, _ = self.make_sut()
         decrypter_spy.user_id = None
         account = sut.load(access_token=self.token, role=self.role)
 
@@ -40,8 +44,15 @@ class TestDbLoadAccountByToken:
 
     @patch('test.data.mocks.cryptography.DecrypterSpy.decrypt')
     def test_3_should_throw_if_Decrypter_throws(self, mocker):
-        sut, _ = self.make_sut()
+        sut, _, _ = self.make_sut()
         mocker.side_effect = Exception
 
         with pytest.raises(Exception):
             sut.load(access_token=self.token, role=self.role)
+
+    def test_4_should_call_LoadAccountByTokenRepository_with_correct_token(self):
+        sut, _, load_account_by_token_repository_spy = self.make_sut()
+        sut.load(access_token=self.token, role=self.role)
+
+        assert load_account_by_token_repository_spy.token == self.token
+        assert load_account_by_token_repository_spy.role == self.role
