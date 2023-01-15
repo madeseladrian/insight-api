@@ -2,11 +2,11 @@ from dataclasses import dataclass
 from datetime import datetime, timedelta, timezone
 from jose import jwt
 
-from ...data.contracts.cryptography import Encrypter
+from ...data.contracts.cryptography import Encrypter, Decrypter
 
 
 @dataclass
-class JoseAdapter(Encrypter):
+class JoseAdapter(Encrypter, Decrypter):
     algorithm: str
     expire_in_days: int
     key: str
@@ -20,3 +20,11 @@ class JoseAdapter(Encrypter):
             key=self.key,
             algorithm=self.algorithm
         )
+
+    def decrypt(self, token: str) -> str:
+        payload = jwt.decode(
+            token=token,
+            key=self.key,
+            algorithms=[self.algorithm]
+        )
+        return payload.get('user_id')

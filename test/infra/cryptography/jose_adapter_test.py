@@ -41,3 +41,10 @@ class TestJoseAdapter:
 
         with pytest.raises(Exception):
             sut.encrypt('any_id')
+
+    @patch('src.infra.cryptography.JoseAdapter.decrypt')
+    def test_5_should_call_decrypt_with_correct_value(self, mocker):
+        sut = self.make_sut()
+        sut.decrypt('any_value')
+
+        mocker.assert_called_once_with('any_value')
