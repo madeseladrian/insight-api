@@ -12,7 +12,6 @@ class TestDbLoadAccountByToken:
     # SetUp
     faker = Faker()
     token = faker.uuid4()
-    role = faker.word()
 
     SutTypes = Tuple[
         DbLoadAccountByToken,
@@ -31,14 +30,14 @@ class TestDbLoadAccountByToken:
 
     def test_1_should_call_Decrypter_with_correct_token(self):
         sut, decrypter_spy, _ = self.make_sut()
-        sut.load(access_token=self.token, role=self.role)
+        sut.load(access_token=self.token)
 
         assert decrypter_spy.token == self.token
 
     def test_2_should_return_None_if_Decrypter_returns_None(self):
         sut, decrypter_spy, _ = self.make_sut()
         decrypter_spy.user_id = None
-        account = sut.load(access_token=self.token, role=self.role)
+        account = sut.load(access_token=self.token)
 
         assert account is None
 
@@ -48,25 +47,24 @@ class TestDbLoadAccountByToken:
         mocker.side_effect = Exception
 
         with pytest.raises(Exception):
-            sut.load(access_token=self.token, role=self.role)
+            sut.load(access_token=self.token)
 
     def test_4_should_call_LoadAccountByTokenRepository_with_correct_token(self):
         sut, _, load_account_by_token_repository_spy = self.make_sut()
-        sut.load(access_token=self.token, role=self.role)
+        sut.load(access_token=self.token)
 
         assert load_account_by_token_repository_spy.token == self.token
-        assert load_account_by_token_repository_spy.role == self.role
 
     def test_5_should_return_None_if_LoadAccountByTokenRepository_returns_None(self):
         sut, _, load_account_by_token_repository_spy = self.make_sut()
         load_account_by_token_repository_spy.result = None
-        account = sut.load(access_token=self.token, role=self.role)
+        account = sut.load(access_token=self.token)
 
         assert account is None
 
     def test_6_should_return_an_account_on_success(self):
         sut, _, load_account_by_token_repository_spy = self.make_sut()
-        account = sut.load(access_token=self.token, role=self.role)
+        account = sut.load(access_token=self.token)
 
         assert account == load_account_by_token_repository_spy.result
 
@@ -76,4 +74,4 @@ class TestDbLoadAccountByToken:
         mocker.side_effect = Exception
 
         with pytest.raises(Exception):
-            sut.load(access_token=self.token, role=self.role)
+            sut.load(access_token=self.token)

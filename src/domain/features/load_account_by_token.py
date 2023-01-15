@@ -9,5 +9,5 @@ from ..params import LoadAccountByTokenResult
 class LoadAccountByToken(ABC):
 
     @abstractmethod
-    def load(self, access_token: str, role: Optional[str] = None) -> Optional[LoadAccountByTokenResult]:
+    def load(self, access_token: str) -> Optional[LoadAccountByTokenResult]:
         raise NotImplementedError('Should implement method: load')

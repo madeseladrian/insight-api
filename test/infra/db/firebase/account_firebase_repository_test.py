@@ -11,6 +11,7 @@ from ....domain.mocks import mock_add_account_params
 class TestAccountFirebaseRepository:
     # SetUp
     faker = Faker()
+    access_token = faker.uuid4()
     params = mock_add_account_params()
     firebase_helper.connect(MockFirestore())
 
@@ -82,12 +83,25 @@ class TestAccountFirebaseRepository:
 
         assert not fake_account.get('access_token')
 
-        access_token = self.faker.uuid4()
-        sut.update_access_token(user_id=fake_account['id'], token=access_token)
+        sut.update_access_token(user_id=fake_account['id'], token=self.access_token)
         account = firebase_helper.get_collection('users').where(
             'id', '==', fake_account['id']
         ).stream()
         account = [a.to_dict() for a in account][0]
 
         assert account
-        assert account['access_token'] == access_token
+        assert account['access_token'] == self.access_token
+
+    def test_8_should_return_an_id_on_success(self, clear_db):
+        sut = self.make_sut()
+        collections = firebase_helper.get_document('users')
+        collections.set({
+            'id': self.params['id'],
+            'name': self.params['name'],
+            'email': self.params['email'],
+            'password': self.params['password'],
+            'access_token': self.access_token
+        })
+        user_id = sut.load_by_token(self.access_token)
+
+        assert user_id == self.params['id']

@@ -14,4 +14,4 @@ class TestLoadAccountByEmailRepository:
         load_account_by_token_repository = LoadAccountByTokenRepository()
 
         with pytest.raises(NotImplementedError, match='Should implement method: load_by_token'):
-            load_account_by_token_repository.load_by_token(token='', role=None)
+            load_account_by_token_repository.load_by_token(token='')

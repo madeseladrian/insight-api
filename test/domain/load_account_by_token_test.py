@@ -14,4 +14,4 @@ class TestLoadAccountByToken:
         load_account_by_token = LoadAccountByToken()
 
         with pytest.raises(NotImplementedError, match='Should implement method: load'):
-            load_account_by_token.load(access_token='', role=None)
+            load_account_by_token.load(access_token='')
