@@ -2,15 +2,15 @@ from dataclasses import dataclass
 from typing import Any
 import uuid
 
-from ...domain.features import AddAccount, Authentication
-from ...domain.params import AddAccountParams, AuthenticationParams
+from ...domain.features import AddAccount
+from ...domain.params import AddAccountParams
 
 from ..contracts import Controller, Validation
 from ..errors import EmailInUseError
 from ..helpers import (
     bad_request,
     forbidden,
-    ok,
+    no_content,
     server_error
 )
 from ..params import SignUpControllerRequest
@@ -19,7 +19,6 @@ from ..params import SignUpControllerRequest
 @dataclass
 class SignUpController(Controller):
     add_account: AddAccount
-    authentication: Authentication
     validation: Validation
 
     def handle(self, request: SignUpControllerRequest) -> Any:
@@ -33,12 +32,7 @@ class SignUpController(Controller):
                 email=request['email'],
                 password=request['password']
             )):
-                authentication = self.authentication.auth(AuthenticationParams(
-                    email=request['email'],
-                    password=request['password']
-                ))
-
-                return ok(authentication)
+                return no_content()
 
             else:
                 return forbidden(EmailInUseError())

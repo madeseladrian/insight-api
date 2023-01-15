@@ -1,4 +1,5 @@
-from fastapi import APIRouter, status
+from fastapi import APIRouter, Depends, status
+from fastapi.security.oauth2 import OAuth2PasswordRequestForm
 
 from ...presentation.params import (
     LoginControllerRequest,
@@ -20,15 +21,12 @@ router = APIRouter(
 @router.post(
     '/signup/',
     responses=sign_up_responses,
-    status_code=status.HTTP_200_OK,
-    response_model=LoginResponseModel
+    status_code=status.HTTP_204_NO_CONTENT
 )
 def create_user(request: SignUpControllerRequest):
     controller = signup_controller_factory()
     http_response = controller.handle(request)
-    adapter = route_response_adapter(http_response)
-    body = adapter.get('body')
-    return {**body, 'token_type': 'bearer'}
+    route_response_adapter(http_response)
 
 @router.post(
     '/login/',
@@ -36,9 +34,12 @@ def create_user(request: SignUpControllerRequest):
     status_code=status.HTTP_200_OK,
     response_model=LoginResponseModel
 )
-def login(request: LoginControllerRequest):
+def login(request: OAuth2PasswordRequestForm = Depends()):
     controller = login_controller_factory()
-    http_response = controller.handle(request)
+    http_response = controller.handle(LoginControllerRequest(
+        email=request.username,
+        password=request.password
+    ))
     adapter = route_response_adapter(http_response)
     body = adapter.get('body')
     return {**body, 'token_type': 'bearer'}
