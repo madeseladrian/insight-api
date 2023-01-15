@@ -1,7 +1,10 @@
 from abc import ABC, abstractmethod
+from dataclasses import dataclass
+
 from ....params import LoadAccountByEmailRepositoryResult
 
 
+@dataclass
 class LoadAccountByEmailRepository(ABC):
 
     @abstractmethod

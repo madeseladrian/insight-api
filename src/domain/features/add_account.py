@@ -3,6 +3,7 @@ from abc import ABC, abstractmethod
 
 from ..params import AddAccountParams, AddAccountResult
 
+
 @dataclass
 class AddAccount(ABC):
     @abstractmethod
