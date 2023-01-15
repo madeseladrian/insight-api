@@ -22,10 +22,10 @@ repos:
         always_run: true
         stages: [commit]
 
-      # - id: pytest-coverage
-      #   name: pytest-coverage
-      #   entry: bash -c 'pytest --cov --cov-report=html; git add .'
-      #   language: system
-      #   pass_filenames: false
-      #   always_run: true
-      #   stages: [commit]
+      - id: pytest-coverage
+        name: pytest-coverage
+        entry: bash -c 'pytest --cov --cov-report=html; git add .'
+        language: system
+        pass_filenames: false
+        always_run: true
+        stages: [commit]
