@@ -1,18 +1,18 @@
-from typing import BinaryIO, Tuple
 from faker import Faker
 
 from src.data.contracts.db.glasses import AddImageStorage
-
+from src.data.params import AddImageRepositoryParams, AddImageRepositoryResult
 
 faker = Faker()
 
 class AddImageStorageSpy(AddImageStorage):
-    image: BinaryIO
-    image_type: str
+    params: AddImageRepositoryParams
     url_image: str = faker.url()
     glasses_id: str = faker.uuid4()
 
-    def add_image(self, image: BinaryIO, image_type: str) -> Tuple[str, str]:
-        self.image = image
-        self.image_type = image_type
-        return self.url_image, self.glasses_id
+    def add_image(self, params: AddImageRepositoryParams) -> AddImageRepositoryResult:
+        self.params = params
+        return AddImageRepositoryResult(
+            glasses_id=self.glasses_id,
+            url_image=self.url_image
+        )

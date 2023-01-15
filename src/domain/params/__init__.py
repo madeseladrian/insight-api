@@ -1,4 +1,4 @@
 from .add_account_params import AddAccountParams, AddAccountResult
 from .add_glasses_params import AddGlassesParams
-from .add_images_params import AddImagesParams
+from .add_image_params import AddImageParams
 from .authentication_params import AuthenticationParams, AuthenticationResult
