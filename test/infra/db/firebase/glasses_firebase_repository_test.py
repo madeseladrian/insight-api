@@ -3,6 +3,8 @@ from mockfirestore import MockFirestore
 import pytest
 from unittest.mock import patch
 
+from src.data.params import GetGlassesRepositoryParams
+
 from src.infra.db.firebase import firebase_helper
 from src.infra.db.firebase.glasses import GlassesFirebaseRepository
 
@@ -36,3 +38,12 @@ class TestGlassesFirebaseRepository:
         is_valid = sut.add(dict(self.params))
 
         assert is_valid is False
+
+    def test_3_should_return_an_list_of_glasses_on_success(self, clear_db):
+        sut = self.make_sut()
+        collections = firebase_helper.get_document('glasses')
+        collections.set(self.params)
+
+        list_glasses = sut.get(GetGlassesRepositoryParams(id=self.params['user_id']))
+
+        assert list_glasses['glasses'][0] == self.params
