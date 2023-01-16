@@ -11,4 +11,4 @@ class DbDeleteGlasses(DeleteGlasses):
     delete_glasses_repository: DeleteGlassesRepository
 
     def delete(self, params: DeleteGlassesParams) -> None:
-        self.delete_glasses_repository
+        self.delete_glasses_repository.delete(params)
