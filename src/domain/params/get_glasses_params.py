@@ -1,8 +1,8 @@
-from typing import Dict, List, TypedDict
+from typing import List, TypedDict
 
 
 class GetGlassesParams(TypedDict):
     id: str
 
 class GetGlassesResult(TypedDict):
-    glasses: List[Dict]
+    glasses: List[dict]

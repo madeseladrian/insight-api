@@ -8,5 +8,5 @@ from ....params import GetGlassesRepositoryParams, GetGlassesRepositoryResult
 class GetGlassesRepository(ABC):
 
     @abstractmethod
-    def get(self, user_id: GetGlassesRepositoryParams) -> GetGlassesRepositoryResult:
+    def get(self, params: GetGlassesRepositoryParams) -> GetGlassesRepositoryResult:
         raise NotImplementedError('Should implement method: get')

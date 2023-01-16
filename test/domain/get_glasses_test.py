@@ -16,4 +16,4 @@ class TestGetGlasses:
         get_glasses = GetGlasses()
 
         with pytest.raises(NotImplementedError, match='Should implement method: get'):
-            get_glasses.get(user_id=params)
+            get_glasses.get(params)

@@ -14,4 +14,4 @@ class TestGetGlassesRepository:
         get_glasses_repository = GetGlassesRepository()
 
         with pytest.raises(NotImplementedError, match='Should implement method: get'):
-            get_glasses_repository.get(user_id='any_id')
+            get_glasses_repository.get(params='any_id')
