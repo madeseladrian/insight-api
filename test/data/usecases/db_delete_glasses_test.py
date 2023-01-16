@@ -1,5 +1,7 @@
 from faker import Faker
+import pytest
 from typing import Tuple
+from unittest.mock import patch
 
 from src.domain.params import DeleteGlassesParams
 from src.data.usecases import DbDeleteGlasses
@@ -38,3 +40,11 @@ class TestDbAddGlasses:
         params = sut.delete(self.params)
 
         assert params is None
+
+    @patch('test.data.mocks.db.glasses.DeleteGlassesRepositorySpy.delete')
+    def test_3_should_throws_if_DeleteGlassesRepository_throws(self, mocker):
+        sut, _ = self.make_sut()
+        mocker.side_effect = Exception
+
+        with pytest.raises(Exception):
+            sut.delete(self.params)
