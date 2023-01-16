@@ -1,5 +1,7 @@
 from faker import Faker
+import pytest
 from typing import Tuple
+from unittest.mock import patch
 
 from src.domain.params import GetGlassesParams
 from src.data.usecases import DbGetGlasses
@@ -39,3 +41,11 @@ class TestDbAddGlasses:
 
         assert get_glasses_repository_spy.result == params
         assert isinstance(params['glasses'], list)
+
+    @patch('test.data.mocks.db.glasses.GetGlassesRepositorySpy.get')
+    def test_3_should_throws_if_GetGlassesRepository_throws(self, mocker):
+        sut, _ = self.make_sut()
+        mocker.side_effect = Exception
+
+        with pytest.raises(Exception):
+            sut.get(self.params)
