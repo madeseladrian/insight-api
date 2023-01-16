@@ -32,3 +32,9 @@ class TestDbAddGlasses:
         sut.delete(self.params)
 
         assert delete_glasses_repository_spy.params == self.params
+
+    def test_2_should_return_None_on_success(self):
+        sut, _ = self.make_sut()
+        params = sut.delete(self.params)
+
+        assert params is None
