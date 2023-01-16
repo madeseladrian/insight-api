@@ -32,3 +32,10 @@ class TestDbAddGlasses:
         sut.get(self.params)
 
         assert get_glasses_repository_spy.params == self.params
+
+    def test_2_should_return_a_list_of_glasses(self):
+        sut, get_glasses_repository_spy = self.make_sut()
+        params = sut.get(self.params)
+
+        assert get_glasses_repository_spy.result == params
+        assert isinstance(params['glasses'], list)

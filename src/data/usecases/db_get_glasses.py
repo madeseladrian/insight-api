@@ -11,4 +11,4 @@ class DbGetGlasses:
     get_glasses_repository: GetGlassesRepository
 
     def get(self, params: GetGlassesParams) -> Any:
-        self.get_glasses_repository.get(params)
+        return self.get_glasses_repository.get(params)
