@@ -7,7 +7,7 @@ from src.main.usecases import make_get_glasses_validation
 
 class TestMakeGetGlassesValidation:
 
-    fields: list = ['user_id']
+    fields: list = ['id']
 
     def test_1_should_call_ValidationComposite_with_all_validations(self):
         validations = [

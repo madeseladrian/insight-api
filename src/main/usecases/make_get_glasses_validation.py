@@ -7,7 +7,7 @@ from ...validation.validators import (
 )
 
 
-fields: list = ['user_id']
+fields: list = ['id']
 
 def make_get_glasses_validation() -> ValidationComposite:
     validations: List[Validation] = [
