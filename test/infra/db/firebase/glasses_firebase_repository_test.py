@@ -39,7 +39,7 @@ class TestGlassesFirebaseRepository:
 
         assert is_valid is False
 
-    def test_3_should_return_an_list_of_glasses_on_success(self, clear_db):
+    def test_3_should_return_a_list_of_glasses_on_success(self, clear_db):
         sut = self.make_sut()
         collections = firebase_helper.get_document('glasses')
         collections.set(self.params)
@@ -47,3 +47,10 @@ class TestGlassesFirebaseRepository:
         list_glasses = sut.get(GetGlassesRepositoryParams(id=self.params['user_id']))
 
         assert list_glasses['glasses'][0] == self.params
+
+    def test_4_should_return_a_empty_list_of_glasses_on_fail(self, clear_db):
+        sut = self.make_sut()
+
+        list_glasses = sut.get(GetGlassesRepositoryParams(id=self.params['user_id']))
+
+        assert list_glasses['glasses'] == []
