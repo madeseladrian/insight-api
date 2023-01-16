@@ -1,4 +1,5 @@
 from .add_glasses_controller import AddGlassesController
 from .add_image_controller import AddImageController
+from .get_glasses_controller import GetGlassesController
 from .login_controller import LoginController
 from .signup_controller import SignUpController
