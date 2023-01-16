@@ -62,8 +62,16 @@ class TestDbAddGlasses:
 
         assert delete_image_storage_spy.params == self.params
 
-    def test_2_should_return_None_if_DeleteImageStorage_succeeds(self):
+    def test_5_should_return_None_if_DeleteImageStorage_succeeds(self):
         sut, _, _ = self.make_sut()
         params = sut.delete(self.params)
 
         assert params is None
+
+    @patch('test.data.mocks.db.glasses.DeleteImageStorageSpy.delete_image')
+    def test_6_should_throws_if_DeleteImageStorage_throws(self, mocker):
+        sut, _, _ = self.make_sut()
+        mocker.side_effect = Exception
+
+        with pytest.raises(Exception):
+            sut.delete(self.params)
