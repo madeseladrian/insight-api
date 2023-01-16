@@ -42,7 +42,7 @@ class TestDbAddGlasses:
 
         assert delete_glasses_repository_spy.params == self.params
 
-    def test_2_should_return_None_on_success(self):
+    def test_2_should_return_None_if_DeleteGlassesRepository_succeeds(self):
         sut, _, _ = self.make_sut()
         params = sut.delete(self.params)
 
@@ -61,3 +61,9 @@ class TestDbAddGlasses:
         sut.delete(self.params)
 
         assert delete_image_storage_spy.params == self.params
+
+    def test_2_should_return_None_if_DeleteImageStorage_succeeds(self):
+        sut, _, _ = self.make_sut()
+        params = sut.delete(self.params)
+
+        assert params is None
