@@ -6,6 +6,7 @@ from src.presentation.controllers import GetGlassesController
 from src.presentation.errors import MissingParamError
 from src.presentation.helpers import (
     bad_request,
+    ok,
     server_error
 )
 from ...domain.mocks import mock_add_glasses_params
@@ -63,3 +64,10 @@ class TestAddGlassesController:
         sut.handle(self.params)
 
         assert get_glasses_spy.params == self.params
+
+    def test_5_should_return_200_if_valid_data_is_provided(self):
+        sut, get_glasses_spy, _ = self.make_sut()
+        http_response = sut.handle(self.params)
+
+        assert http_response['status_code'] == 200
+        assert http_response == ok(get_glasses_spy.result)

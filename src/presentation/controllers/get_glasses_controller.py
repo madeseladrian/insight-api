@@ -4,7 +4,7 @@ from typing import Any
 from ...domain.features import GetGlasses
 
 from ..contracts import Validation
-from ..helpers import bad_request, server_error
+from ..helpers import bad_request, ok, server_error
 from ..params import GetGlassesControllerRequest
 
 
@@ -18,6 +18,7 @@ class GetGlassesController:
             if error := self.validation.validate(request):
                 return bad_request(error)
 
-            self.get_glasses.get(request)
+            glasses = self.get_glasses.get(request)
+            return ok(glasses)
         except Exception as e:
             return server_error(e)
