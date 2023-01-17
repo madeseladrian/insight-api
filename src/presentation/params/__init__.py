@@ -4,4 +4,5 @@ from .auth_middleware_request import AuthMiddlewareRequest
 from .get_glasses_controller_request import GetGlassesControllerRequest
 from .login_controller_request import LoginControllerRequest
 from .signup_controller_request import SignUpControllerRequest
+from .update_glasses_controller_request import UpdateGlassesControllerRequest
 from .update_image_controller_request import UpdateImageControllerRequest
