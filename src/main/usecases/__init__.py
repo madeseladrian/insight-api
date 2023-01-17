@@ -5,6 +5,7 @@ from .make_db_authentication import make_db_authentication
 from .make_db_delete_glasses import make_db_delete_glasses
 from .make_db_get_glasses import make_db_get_glasses
 from .make_db_load_account_by_token import make_db_load_account_by_token
+from .make_db_update_glasses import make_db_update_glasses
 from .make_db_update_image import make_db_update_image
 
 from .make_add_glasses_validation import make_add_glasses_validation
