@@ -4,4 +4,5 @@ from .delete_glasses_controller_factory import delete_glasses_controller_factory
 from .get_glasses_controller_factory import get_glasses_controller_factory
 from .login_controller_factory import login_controller_factory
 from .signup_controller_factory import signup_controller_factory
+from .update_glasses_controller_factory import update_glasses_controller_factory
 from .update_image_controller_factory import update_image_controller_factory
