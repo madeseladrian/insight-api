@@ -3,8 +3,10 @@ from mockfirestore import MockFirestore
 import pytest
 from unittest.mock import patch
 
-from src.data.params import GetGlassesRepositoryParams
-
+from src.data.params import (
+    GetGlassesRepositoryParams,
+    DeleteGlassesRepositoryParams
+)
 from src.infra.db.firebase import firebase_helper
 from src.infra.db.firebase.glasses import GlassesFirebaseRepository
 
@@ -54,3 +56,26 @@ class TestGlassesFirebaseRepository:
         list_glasses = sut.get(GetGlassesRepositoryParams(id=self.params['user_id']))
 
         assert list_glasses['glasses'] == []
+
+    def test_5_should_delete_glasses_data_on_success(self, clear_db):
+        sut = self.make_sut()
+        collections = firebase_helper.get_document('glasses')
+        collections.set(self.params)
+
+        glasses = firebase_helper.get_collection('glasses').where(
+            'glasses_id', '==', self.params['glasses_id']
+        ).stream()
+        glasses_data = [f.to_dict() for f in glasses][0]
+
+        assert glasses_data
+
+        sut.delete(DeleteGlassesRepositoryParams(
+            glasses_id=self.params['glasses_id']
+        ))
+
+        glasses = firebase_helper.get_collection('glasses').where(
+            'glasses_id', '==', self.params['glasses_id']
+        ).stream()
+        glasses_data = [f.to_dict() for f in glasses]
+
+        assert glasses_data == []
