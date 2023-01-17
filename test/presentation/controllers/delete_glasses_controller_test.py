@@ -1,10 +1,12 @@
 from faker import Faker
 from typing import Tuple
+from unittest.mock import patch
 
 from src.presentation.controllers import DeleteGlassesController
 from src.presentation.errors import MissingParamError
 from src.presentation.helpers import (
-    bad_request
+    bad_request,
+    server_error
 )
 
 from ...domain.mocks import mock_add_glasses_params
@@ -42,3 +44,13 @@ class TestAddGlassesController:
 
         assert http_response['status_code'] == 400
         assert http_response == bad_request(validation_spy.error)
+
+    @patch('test.presentation.mocks.validation.ValidationSpy.validate')
+    def test_3_should_return_500_if_Validation_throws(self, mocker):
+        sut, _ = self.make_sut()
+        exception = Exception()
+        mocker.side_effect = exception
+        http_response = sut.handle(request=self.params)
+
+        assert http_response['status_code'] == 500
+        assert http_response == server_error(error=exception)
