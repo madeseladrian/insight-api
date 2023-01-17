@@ -62,7 +62,6 @@ def update_glasses(glasses_id: str, request: UpdateGlassesRequest, user_id: str 
     controller_params.update({'glasses_id': glasses_id})
 
     controller = update_glasses_controller_factory()
-    print(controller_params)
     http_response = controller.handle(controller_params)
     route_response_adapter(http_response)
 
