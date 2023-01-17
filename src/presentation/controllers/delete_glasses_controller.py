@@ -2,6 +2,7 @@ from dataclasses import dataclass
 from typing import Any
 
 from ..contracts import Validation
+from ..helpers import bad_request
 from ..params import AddGlassesControllerRequest
 
 
@@ -10,4 +11,5 @@ class DeleteGlassesController:
     validation: Validation
 
     def handle(self, request: AddGlassesControllerRequest) -> Any:
-        self.validation.validate(request)
+        if error := self.validation.validate(request):
+            return bad_request(error)
