@@ -4,3 +4,4 @@ from .delete_glasses_controller import DeleteGlassesController
 from .get_glasses_controller import GetGlassesController
 from .login_controller import LoginController
 from .signup_controller import SignUpController
+from .update_image_controller import UpdateGlassesController
