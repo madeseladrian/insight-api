@@ -16,3 +16,9 @@ class TestApp:
         assert middlewares_options['allow_credentials']
         assert middlewares_options['allow_methods'] == ['*']
         assert middlewares_options['allow_headers'] == ['*']
+
+    def test_3_create_app_should_calls_with_routes(self):
+        routes = self.app.router.routes[4:]
+        # path_routes = [route.__dict__['path'] for route in routes]
+
+        assert len(routes) > 0
