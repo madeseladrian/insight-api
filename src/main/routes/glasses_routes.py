@@ -7,12 +7,14 @@ from ..docs import glasses_responses
 from ..factories.controllers import (
     add_glasses_controller_factory,
     delete_glasses_controller_factory,
-    get_glasses_controller_factory
+    get_glasses_controller_factory,
+    update_glasses_controller_factory
 )
 from ..middlewares import auth
 from ..params import (
     AddGlassesRequest,
-    DeleteGlassesRequest
+    DeleteGlassesRequest,
+    UpdateGlassesRequest
 )
 
 
@@ -46,6 +48,21 @@ def add_glasses(request: AddGlassesRequest, user_id: str = Depends(auth)):
     controller_params.update({'user_id': user_id})
 
     controller = add_glasses_controller_factory()
+    http_response = controller.handle(controller_params)
+    route_response_adapter(http_response)
+
+
+@router.put(
+    '/',
+    responses=glasses_responses,
+    status_code=status.HTTP_204_NO_CONTENT
+)
+def update_glasses(glasses_id: str, request: UpdateGlassesRequest, user_id: str = Depends(auth)):
+    controller_params = {**request}
+    controller_params.update({'glasses_id': glasses_id})
+
+    controller = update_glasses_controller_factory()
+    print(controller_params)
     http_response = controller.handle(controller_params)
     route_response_adapter(http_response)
 

@@ -10,7 +10,7 @@ class UpdateFieldValidation(Validation):
     list_of_fields_to_compare: List
 
     def validate(self, value: Any) -> Optional[Exception]:
-        fields = list(set(value))
+        fields = list(set(value['data']))
 
         for field in fields:
             if field not in self.list_of_fields_to_compare:

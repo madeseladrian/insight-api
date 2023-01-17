@@ -1,2 +1,3 @@
 from .add_glasses_request import AddGlassesRequest
 from .delete_glasses_request import DeleteGlassesRequest
+from .update_glasses_request import UpdateGlassesRequest
