@@ -1,4 +1,5 @@
 from .compare_fields_validation import CompareFieldsValidation
 from .email_validation import EmailValidation
 from .required_field_validation import RequiredFieldValidation
+from .update_field_validation import UpdateFieldValidation
 from .validation_composite import ValidationComposite
