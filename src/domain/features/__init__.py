@@ -5,3 +5,4 @@ from .authentication import Authentication
 from .delete_glasses import DeleteGlasses
 from .get_glasses import GetGlasses
 from .load_account_by_token import LoadAccountByToken
+from .update_image import UpdateImage

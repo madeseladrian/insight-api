@@ -7,7 +7,7 @@ from src.domain.features import AddImage
 from src.domain.params import AddImageParams
 
 
-class TestAddAccount:
+class TestAddImage:
     def test_1_should_AddImage_is_an_abstract_class(self):
         assert isabstract(AddImage)
 
@@ -17,7 +17,7 @@ class TestAddAccount:
             image=BytesIO(),
             glasses_id='any_id'
         )
-        add_images = AddImage()
+        add_image = AddImage()
 
         with pytest.raises(NotImplementedError, match='Should implement method: add_image'):
-            add_images.add_image(params)
+            add_image.add_image(params)
