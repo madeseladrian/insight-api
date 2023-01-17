@@ -13,4 +13,5 @@ from .make_delete_glasses_validation import make_delete_glasses_validation
 from .make_get_glasses_validation import make_get_glasses_validation
 from .make_login_validation import make_login_validation
 from .make_signup_validation import make_signup_validation
+from .make_update_glasses_validation import make_update_glasses_validation
 from .make_update_image_validation import make_update_image_validation
