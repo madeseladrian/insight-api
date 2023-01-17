@@ -47,7 +47,7 @@ def add_glasses(request: AddGlassesRequest, user_id: str = Depends(auth)):
 
     controller = add_glasses_controller_factory()
     http_response = controller.handle(controller_params)
-    return route_response_adapter(http_response)
+    route_response_adapter(http_response)
 
 
 @router.delete(
