@@ -1,4 +1,6 @@
+import pytest
 from typing import Dict, Tuple
+from unittest.mock import patch
 
 from src.data.usecases import DbUpdateGlasses
 
@@ -35,3 +37,11 @@ class TestDbAddGlasses:
         update = sut.update(self.params)
 
         assert update is None
+
+    @patch('test.data.mocks.db.glasses.UpdateGlassesRepositorySpy.update')
+    def test_3_should_throws_if_UpdateGlassesRepository_throws(self, mocker):
+        sut, _ = self.make_sut()
+        mocker.side_effect = Exception
+
+        with pytest.raises(Exception):
+            sut.add(self.params)
