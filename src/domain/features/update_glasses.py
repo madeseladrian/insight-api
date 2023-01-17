@@ -1,11 +1,12 @@
 from abc import ABC, abstractmethod
 from dataclasses import dataclass
-from typing import Dict
+
+from ..params import UpdateGlassesParams
 
 
 @dataclass
 class UpdateGlasses(ABC):
 
     @abstractmethod
-    def update(self, data: Dict) -> None:
+    def update(self, params: UpdateGlassesParams) -> None:
         raise NotImplementedError('Should implement method: update')

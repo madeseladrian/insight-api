@@ -1,10 +1,9 @@
-from typing import Dict
-
 from src.data.contracts.db.glasses import UpdateGlassesRepository
+from src.data.params import UpdateGlassesRepositoryParams
 
 
 class UpdateGlassesRepositorySpy(UpdateGlassesRepository):
-    data: Dict
+    data: UpdateGlassesRepositoryParams
 
-    def update(self, data: Dict) -> None:
+    def update(self, data: UpdateGlassesRepositoryParams) -> None:
         self.data = data

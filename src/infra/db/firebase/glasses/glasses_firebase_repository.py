@@ -3,14 +3,16 @@ from dataclasses import dataclass
 from .....data.contracts.db.glasses import (
     AddGlassesRepository,
     DeleteGlassesRepository,
-    GetGlassesRepository
+    GetGlassesRepository,
+    UpdateGlassesRepository
 )
 from .....data.params import (
     AddGlassesRepositoryParams,
     AddGlassesRepositoryResult,
     DeleteGlassesRepositoryParams,
     GetGlassesRepositoryParams,
-    GetGlassesRepositoryResult
+    GetGlassesRepositoryResult,
+    UpdateGlassesRepositoryParams
 )
 from ..firebase_helper import firebase_helper
 
@@ -19,7 +21,8 @@ from ..firebase_helper import firebase_helper
 class GlassesFirebaseRepository(
     AddGlassesRepository,
     DeleteGlassesRepository,
-    GetGlassesRepository
+    GetGlassesRepository,
+    UpdateGlassesRepository
 ):
 
     def add(self, data: AddGlassesRepositoryParams) -> AddGlassesRepositoryResult:
@@ -47,3 +50,13 @@ class GlassesFirebaseRepository(
 
         document_id = [doc.id for doc in glasses][0]
         firebase_helper.get_collection('glasses').document(document_id).delete()
+
+    def update(self, params: UpdateGlassesRepositoryParams) -> None:
+        glasses_id = params['glasses_id']
+
+        glasses = firebase_helper.get_collection('glasses').where(
+            'glasses_id', '==', glasses_id
+        ).stream()
+
+        document_id = [doc.id for doc in glasses][0]
+        firebase_helper.get_collection('glasses').document(document_id).update(params['data'])

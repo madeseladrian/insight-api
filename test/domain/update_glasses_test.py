@@ -3,6 +3,7 @@ import pytest
 from unittest.mock import patch
 
 from src.domain.features import UpdateGlasses
+from src.domain.params import UpdateGlassesParams
 
 
 class TestUpdateGlasses:
@@ -11,7 +12,7 @@ class TestUpdateGlasses:
 
     @patch.multiple(UpdateGlasses, __abstractmethods__=set())
     def test_2_should_UpdateGlasses_raise_a_NotImplementedError_if_not_implemented(self):
-        params = {}
+        params = UpdateGlassesParams(glasses_id='any_id', data={'any_key': 'any_value'})
         update_glasses = UpdateGlasses()
 
         with pytest.raises(NotImplementedError, match='Should implement method: update'):

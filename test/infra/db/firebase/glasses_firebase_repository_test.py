@@ -5,7 +5,8 @@ from unittest.mock import patch
 
 from src.data.params import (
     GetGlassesRepositoryParams,
-    DeleteGlassesRepositoryParams
+    DeleteGlassesRepositoryParams,
+    UpdateGlassesRepositoryParams
 )
 from src.infra.db.firebase import firebase_helper
 from src.infra.db.firebase.glasses import GlassesFirebaseRepository
@@ -79,3 +80,28 @@ class TestGlassesFirebaseRepository:
         glasses_data = [f.to_dict() for f in glasses]
 
         assert glasses_data == []
+
+    def test_6_should_update_glasses_data_on_success(self, clear_db):
+        sut = self.make_sut()
+        collections = firebase_helper.get_document('glasses')
+        collections.set(self.params)
+
+        glasses = firebase_helper.get_collection('glasses').where(
+            'glasses_id', '==', self.params['glasses_id']
+        ).stream()
+        glasses_data = [f.to_dict() for f in glasses][0]
+
+        assert glasses_data['glasses_id'] == self.params['glasses_id']
+
+        updated_data = {'model': 'updated_model'}
+        sut.update(UpdateGlassesRepositoryParams(
+            glasses_id=self.params['glasses_id'],
+            data=updated_data
+        ))
+
+        glasses = firebase_helper.get_collection('glasses').where(
+            'glasses_id', '==', self.params['glasses_id']
+        ).stream()
+        glasses_data = [f.to_dict() for f in glasses][0]
+
+        assert glasses_data['model'] == updated_data['model']
