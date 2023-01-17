@@ -7,10 +7,13 @@ from ...presentation.errors import InvalidParamError
 
 @dataclass
 class UpdateFieldValidation(Validation):
-    field_name: str
     list_of_fields_to_compare: List
 
     def validate(self, value: Any) -> Optional[Exception]:
-        if value[0] in value[1]:
-            return None
-        return InvalidParamError(value[0])
+        fields = list(set(value))
+
+        for field in fields:
+            if field in self.list_of_fields_to_compare:
+                return None
+
+        return InvalidParamError(field)
