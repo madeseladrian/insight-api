@@ -1,4 +1,6 @@
+import pytest
 from typing import Tuple
+from unittest.mock import patch
 
 from src.data.usecases import DbUpdateImage
 
@@ -30,3 +32,11 @@ class TestDbAddImages:
         sut.update_image(self.params)
 
         assert update_image_repository_spy.params == self.params
+
+    @patch('test.data.mocks.db.glasses.UpdateImageStorageSpy.update_image')
+    def test_2_should_throws_if_UpdateImageStorage_throws(self, mocker):
+        sut, _ = self.make_sut()
+        mocker.side_effect = Exception
+
+        with pytest.raises(Exception):
+            sut.add_image(self.params)
