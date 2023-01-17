@@ -5,3 +5,4 @@ from .db_authentication import DbAuthentication
 from .db_delete_glasses import DbDeleteGlasses
 from .db_get_glasses import DbGetGlasses
 from .db_load_account_by_token import DbLoadAccountByToken
+from .db_update_image import DbUpdateImage
