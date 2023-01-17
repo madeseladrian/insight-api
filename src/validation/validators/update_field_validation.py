@@ -13,7 +13,7 @@ class UpdateFieldValidation(Validation):
         fields = list(set(value))
 
         for field in fields:
-            if field in self.list_of_fields_to_compare:
-                return None
+            if field not in self.list_of_fields_to_compare:
+                return InvalidParamError(field)
 
-        return InvalidParamError(field)
+        return None

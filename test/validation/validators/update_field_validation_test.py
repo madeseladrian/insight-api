@@ -21,3 +21,12 @@ class TestUpdateFieldValidation:
         error = sut.validate({self.field: self.value})
 
         assert error == InvalidParamError(self.field)
+
+    def test_2_should_return_None_if_validation_succeds(self):
+        sut = self.make_sut()
+        error = sut.validate({
+            'any_field': 'any_value',
+            'other_field': 'other_value'
+        })
+
+        assert error is None
