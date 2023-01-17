@@ -64,3 +64,10 @@ class TestAddGlassesController:
         sut.handle(self.params)
 
         assert delete_glasses_spy.params == self.params
+
+    def test_5_should_return_204_if_valid_data_is_provided(self):
+        sut, _, _ = self.make_sut()
+        http_response = sut.handle(self.params)
+
+        assert http_response['status_code'] == 204
+        assert http_response['body'] is None
