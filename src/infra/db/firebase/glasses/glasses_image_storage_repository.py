@@ -4,19 +4,22 @@ import uuid
 
 from .....data.contracts.db.glasses import (
     AddImageStorage,
-    DeleteImageStorage
+    DeleteImageStorage,
+    UpdateImageStorage
 )
 from .....data.params import (
     AddImageRepositoryParams,
     AddImageRepositoryResult,
-    DeleteImageRepositoryParams
+    DeleteImageRepositoryParams,
+    UpdateImageRepositoryParams
 )
 
 
 @dataclass
 class GlassesImageStorageRepository(
     AddImageStorage,
-    DeleteImageStorage
+    DeleteImageStorage,
+    UpdateImageStorage
 ):
     def add_image(self, params: AddImageRepositoryParams) -> AddImageRepositoryResult:
         glasses_id = str(uuid.uuid4())
@@ -35,3 +38,9 @@ class GlassesImageStorageRepository(
         bucket = storage.bucket()
         blob = bucket.blob(glasses_id)
         blob.delete()
+
+    def update_image(self, params: UpdateImageRepositoryParams) -> None:
+        bucket = storage.bucket()
+        blob = bucket.blob(params['glasses_id'])
+        blob.upload_from_file(params['image'], content_type=params['content_type'])
+        blob.make_public()
