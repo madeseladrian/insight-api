@@ -7,7 +7,7 @@ from .routes import create_routes
 def create_app() -> FastAPI:
     app = FastAPI(
         title='Recomendação de Óculos',
-        version='3.1.0',
+        version='3.2.0',
         # servers=[{
         #     'url': '/api',
         #     'description': 'Servidor Principal'
