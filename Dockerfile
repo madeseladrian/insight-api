@@ -5,8 +5,8 @@ FROM python:3.10.2-slim
 RUN apt update && apt install -y --no-install-recommends \
     curl 
 
-# Pacote necessário para as bibliotecas de AI
-RUN apt-get install libgl1
+# Pacotes necessário para as bibliotecas de AI
+RUN apt-get install ffmpeg libsm6 libxext6 -y
 
 # Instala o PDM e coloca a variável de ambiente no PATH
 RUN curl -sSL https://raw.githubusercontent.com/pdm-project/pdm/main/install-pdm.py | python3 - 
