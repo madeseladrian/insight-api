@@ -12,9 +12,11 @@ from .ai_predictions import (
     radius_eyes,
 )
 from .schemas import (
+    Age,
     BetweenEyebrowns,
     BetweenMouthChin,
     BetweenNoseMouth,
+    Gender,
     LeftEye,
     LeftEyebrownHeight,
     LeftEyebrownThickness,
@@ -24,6 +26,7 @@ from .schemas import (
     RightIris,
     RightEyebrownHeight,
     RightEyebrownThickness,
+    Shape,
     NoseHeight,
     NoseWidth,
     MouthWidth,

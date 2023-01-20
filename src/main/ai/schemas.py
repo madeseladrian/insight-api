@@ -1,6 +1,24 @@
 from pydantic import BaseModel
 
 
+class Age(BaseModel):
+    age: int
+
+    class Config:
+        orm_mode = True
+
+class Gender(BaseModel):
+    gender: str
+
+    class Config:
+        orm_mode = True
+
+class Shape(BaseModel):
+    shape: str
+
+    class Config:
+        orm_mode = True
+
 class LeftEye(BaseModel):
     left_eye: float
 
