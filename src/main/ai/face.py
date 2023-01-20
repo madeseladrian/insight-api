@@ -6,10 +6,10 @@ import os
 
 from ..middlewares import auth
 from .schemas import (
-    Shape,
     BetweenEyebrowns,
     BetweenMouthChin,
     BetweenNoseMouth,
+    Gender,
     LeftEye,
     LeftEyebrownHeight,
     LeftEyebrownThickness,
@@ -23,6 +23,7 @@ from .schemas import (
     NoseWidth,
     MouthWidth,
     PupillaryDistance,
+    Shape,
     UpperLipThickness
 )
 from .ai_predictions import (
@@ -57,8 +58,9 @@ version_v1 = 'v1'
 client = vision.ImageAnnotatorClient()
 
 
-@router.post("/faceShape", status_code=status.HTTP_201_CREATED, response_model=Shape)
-def face_shape(image: bytes = File(), user_id: str = Depends(auth)):
+@router.post("/gender", status_code=status.HTTP_201_CREATED, response_model=Gender)
+def gender(image: bytes = File(), user_id: str = Depends(auth)):
+    # Transforming 'bytes' to OpenCV format
     image_cv = convert_bytes_to_opencv(image)
 
     # Get the face annotations
@@ -78,7 +80,37 @@ def face_shape(image: bytes = File(), user_id: str = Depends(auth)):
     request_data = [{'image_bytes': {'b64': base64.b64encode(image).decode()}, 'key': ''}]
 
     # Response model
-    model_name = 'face_shape'
+    model_name = 'gender'
+    gender = predict_json(project, region, model_name, request_data, version_v1)
+
+    # Gender Predictions
+    labels = ['F', 'M']
+    predictions_gender = labels[np.argmax(gender[0]['scores'])]
+
+    return {'gender': predictions_gender}
+
+@router.post("/shape", status_code=status.HTTP_201_CREATED, response_model=Shape)
+def shape(image: bytes = File(), user_id: str = Depends(auth)):
+    image_cv = convert_bytes_to_opencv(image)
+
+    # Get the face annotations
+    google_vision = vision.Image(content=image)
+    response = client.face_detection(image=google_vision)
+
+    # Number of faces annotations
+    faceAnnotation = response.face_annotations
+
+    # Points
+    points = faceAnnotation[0].bounding_poly.vertices
+
+    # Image resized
+    image_resized = image_cv[points[0].y:points[2].y, points[0].x:points[2].x]
+    image = convert_to_bytes(image_resized)
+
+    request_data = [{'image_bytes': {'b64': base64.b64encode(image).decode()}, 'key': ''}]
+
+    # Response model
+    model_name = 'shape'
     shape = predict_json(project, region, model_name, request_data, version_v1)
 
     # Shape Predictions
