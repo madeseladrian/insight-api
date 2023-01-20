@@ -5,6 +5,9 @@ FROM python:3.10.2-slim
 RUN apt update && apt install -y --no-install-recommends \
     curl 
 
+# Pacote necessário para as bibliotecas de AI
+RUN apt-get install libgl1
+
 # Instala o PDM e coloca a variável de ambiente no PATH
 RUN curl -sSL https://raw.githubusercontent.com/pdm-project/pdm/main/install-pdm.py | python3 - 
 ENV PATH=/root/.local/bin:$PATH
@@ -21,3 +24,7 @@ ENV PATH='/home/python/app/.venv/bin:$PATH'
 
 # Roda a aplicação na porta 80
 CMD ["uvicorn", "main:app", "--host", "0.0.0.0", "--port", "8000"]
+
+# Docker
+# docker build -t <name> .
+# docker run -d -p 8000:8000 --name <name> <nameimage>

@@ -19,6 +19,14 @@ class Shape(BaseModel):
     class Config:
         orm_mode = True
 
+class RecSys(BaseModel):
+    age: str
+    gender: str
+    shape: str
+
+    class Config:
+        orm_mode = True
+
 class LeftEye(BaseModel):
     left_eye: float
 
